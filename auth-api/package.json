@@ -1,0 +1,35 @@
+{
+  "name": "auth-api",
+  "version": "1.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "alert": "^5.0.10",
+    "axios": "^1.6.2",
+    "connect": "^3.2.0",
+    "ejs": "^3.1.6",
+    "express-openapi": "^10.0.0",
+    "express-session": "^1.17.2",
+    "jQuery": "^1.7.4",
+    "js-yaml": "^3.3.0",
+    "jsdom": "^19.0.0",
+    "mongodb": "^4.2.2",
+    "node-fetch": "^3.1.0",
+    "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0",
+    "routing-controllers": "^0.10.4",
+    "swagger-express-router": "^1.0.0",
+    "swagger-routes-express": "^3.3.2",
+    "swagger-ui-express": "^4.2.0",
+    "yamljs": "^0.3.0"
+  }
+}

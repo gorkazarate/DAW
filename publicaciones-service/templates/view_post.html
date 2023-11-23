@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Publicaciones</title>
+</head>
+<body>
+    <header>
+        <img src="/static/logo.png" alt="Logo" width="50" height="50">
+        <h1>ServiWeb - Ver Publicaciones</h1>
+    </header>
+    <main>
+        <button onclick="searchByUser()">Buscar por Usuario</button>
+        <button onclick="showAllPosts()">Mostrar Todas las Publicaciones</button>
+        <button onclick="searchByDate()">Buscar por Fecha</button>
+       
+        <div id="postsContainer"></div>
+    </main>
+    <script>
+        function searchByUser() {
+            // Aquí puedes hacer una solicitud al backend para buscar por usuario
+            alert('Buscar por Usuario');
+        }
+
+        function showAllPosts() {
+            // Aquí puedes hacer una solicitud al backend para mostrar todas las publicaciones
+            alert('Mostrar Todas las Publicaciones');
+        }
+
+        function searchByDate() {
+            // Aquí puedes hacer una solicitud al backend para buscar por fecha
+            alert('Buscar por Fecha');
+        }
+    </script>
+</body>
+</html>
