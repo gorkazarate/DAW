@@ -10,8 +10,9 @@ var usersDao = require('../DAOS/UsersDao');
  **/
 exports.getUser = function(user_id) {
   return new Promise(function(resolve, reject) {
-    if (user_id >= 0) {usersDao.findOn
-      var usersDaoPromise = e(user_id);
+    if (user_id >= 0) {
+
+      var usersDaoPromise = usersDao.findOne(user_id);
       usersDaoPromise.then(
         (user) =>{ 
           if(user !== undefined){
@@ -50,6 +51,8 @@ exports.postUser = function(body,user_id) {
 
   }).then(
     function(body){
+      console.log("Se entra");
+
       usersDao.insert(body);
   })
   .catch(

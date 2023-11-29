@@ -15,15 +15,15 @@ const axios = require('axios');
 // ###########  API  ########### //
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-// Como no funciona el router añadire las routas a mano
+
+
 router.get('/api/v1/user/:user_id', function(req, res){
   usersController.getUser(req, res, undefined ,req.params.user_id);
-  
-
 });
 router.post('/api/v1/user/:user_id', function(req, res){
   usersController.postUser(req, res, "", req.body, req.params.user_id);
 });
+
 
 router.get('/', function(req, res){
   res.redirect('/login');
@@ -105,6 +105,7 @@ router.get('/auth/google/callback',
           axios.post(userUrl, postUserRequest);
         })();
       }else{
+        console.log("****************",user.data);
         console.log("El usuario ya existe en la BD");
       }
     })();
