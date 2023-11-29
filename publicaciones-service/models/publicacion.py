@@ -1,10 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from models import Base
 
-Base = declarative_base()
 
 class Publicacion(Base):
-    __tablename__ = 'publicacion'
+    __tablename__ = 'publicacion'  # Ajusta este nombre según tu base de datos
 
     idpost = Column(Integer, primary_key=True)
     Titulo = Column(String)
@@ -15,5 +15,4 @@ class Publicacion(Base):
     servicio_id = Column(Integer)
 
     usuario = relationship('Usuario')
-
 db.create_all()

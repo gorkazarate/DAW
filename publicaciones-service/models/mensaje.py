@@ -1,15 +1,18 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from models import Base
 
-Base = declarative_base()
 
-class Mensaje(db.Model):
-    id_mensaje = db.Column(db.Integer, primary_key=True)
-    contenido = db.Column(db.String(255))
-    emisor_id = db.Column(db.Integer)
-    conversacion_id = db.Column(db.Integer, db.ForeignKey('conversacion.id_conversacion'))
-    fecha_envio = db.Column(db.DateTime)
 
-    conversacion = db.relationship('Conversacion', backref=db.backref('mensajes', lazy=True))
+class Mensaje(Base):
+    __tablename__ = 'mensaje'
+
+    id_mensaje = Column(Integer, primary_key=True)
+    contenido = Column(String)
+    emisor_id = Column(Integer)
+    fecha_envio = Column(DateTime)
+    conversacion_id = Column(Integer, ForeignKey('conversacion.id_conversacion'))
+
+    conversacion = relationship('Conversacion')
 
 db.create_all()

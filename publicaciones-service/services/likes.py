@@ -1,5 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
+import pymysql
+pymysql.install_as_MySQLdb()
+
 
 class LikeResource(Resource):
     def get(self, id_like):

@@ -1,13 +1,16 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from models import Base
 
-class Usuario(db.Model):
-    id_usuario = db.Column(db.Integer, primary_key=True)
-    nombre_completo = db.Column(db.String(255))
-    cumpleano = db.Column(db.Date)
-    numerotlf = db.Column(db.String(20))
-    direccion = db.Column(db.String(255))
-    user_id = db.Column(db.Integer, unique=True)
+class Usuario(Base):
+    __tablename__ = 'usuario'  # Ajusta este nombre según tu base de datos
+
+    Id_usuario = Column(Integer, primary_key=True)
+    nombre_completo = Column(String)
+    cumpleaño = Column(Date)
+    numerotlf = Column(String)
+    dirección = Column(String)
+    user_id = Column(Integer, unique=True)
 
 
 db.create_all()

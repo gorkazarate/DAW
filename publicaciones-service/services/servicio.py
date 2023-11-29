@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 
+import pymysql
+pymysql.install_as_MySQLdb()
 
 class ServicioResource(Resource):
     def get(self):

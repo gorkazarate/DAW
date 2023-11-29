@@ -1,13 +1,15 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from models import Base
 
-Base = declarative_base()
 
-class Servicio(db.Model):
-    servicio_id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String(255))
-    foto = db.Column(db.String(255))
-    descripcion = db.Column(db.String(1000))
+class Servicio(Base):
+    __tablename__ = 'servicio'  # Ajusta este nombre según tu base de datos
+
+    servicio_id = Column(Integer, primary_key=True)
+    titulo = Column(String)
+    foto = Column(String)
+    descripcion = Column(String)
 
 
 db.create_all()

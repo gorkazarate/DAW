@@ -1,14 +1,15 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from models import Base
 
-Base = declarative_base()
+class Like(Base):
+    __tablename__ = 'likes'
 
-class Like(db.Model):
-    id_like = db.Column(db.Integer, primary_key=True)
-    id_usuarioorigen = db.Column(db.Integer)
-    id_usuariodestino = db.Column(db.Integer)
-    biografia = db.Column(db.String(255))
-    fecha = db.Column(db.DateTime)
+    id_like = Column(Integer, primary_key=True)
+    id_usuarioorigen = Column(Integer)
+    id_usuariodestino = Column(Integer)
+    biografia = Column(String)
+    fecha = Column(DateTime)
 
-        
+
 db.create_all()
