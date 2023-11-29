@@ -18,7 +18,7 @@ def main():
 
 # Conectar con la base de datos
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://usuario:contraseña@localhost/nombre_de_la_base_de_datos'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:1234@localhost/nombre_de_la_base_de_datos'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
