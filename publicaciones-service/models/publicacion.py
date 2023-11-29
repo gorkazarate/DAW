@@ -15,3 +15,5 @@ class Publicacion(Base):
     servicio_id = Column(Integer)
 
     usuario = relationship('Usuario')
+
+db.create_all()

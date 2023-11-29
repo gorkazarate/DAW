@@ -3,10 +3,11 @@ from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
-class Servicio(Base):
-    __tablename__ = 'servicio'
+class Servicio(db.Model):
+    servicio_id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(255))
+    foto = db.Column(db.String(255))
+    descripcion = db.Column(db.String(1000))
 
-    servicio_id = Column(Integer, primary_key=True)
-    titulo = Column(String)
-    foto = Column(String)
-    descripcion = Column(String)
+
+db.create_all()

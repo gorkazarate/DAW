@@ -3,11 +3,12 @@ from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
-class Like(Base):
-    __tablename__ = 'likes'
+class Like(db.Model):
+    id_like = db.Column(db.Integer, primary_key=True)
+    id_usuarioorigen = db.Column(db.Integer)
+    id_usuariodestino = db.Column(db.Integer)
+    biografia = db.Column(db.String(255))
+    fecha = db.Column(db.DateTime)
 
-    Id_like = Column(Integer, primary_key=True)
-    Id_usuarioorigen = Column(Integer)
-    Id_usuariodestino = Column(Integer)
-    biografia = Column(String)
-    Fecha = Column(DateTime)
+        
+db.create_all()

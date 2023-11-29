@@ -1,16 +1,43 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 
-Base = declarative_base()
 
+class ConversacionResource(Resource):
+    def get(self, id_conversacion):
+        conversacion = Conversacion.query.filter_by(id_conversacion=id_conversacion).first()
+        if conversacion:
+            return {'id_persona1': conversacion.id_persona1,
+                    'id_persona2': conversacion.id_persona2,
+                    'creado': str(conversacion.creado)}, 200
+        else:
+            return {'message': 'Conversación no encontrada'}, 404
 
-class Conversacion(Base):
-    __tablename__ = 'conversacion'
+    def post(self):
+        data = request.get_json()
 
-    id_conversacion = Column(Integer, primary_key=True)
-    id_persona1 = Column(Integer, ForeignKey('perfil.Id_usuario'))
-    id_persona2 = Column(Integer, ForeignKey('perfil.Id_usuario'))
-    Creado = Column(DateTime)
+        nueva_conversacion = Conversacion(id_persona1=data['id_persona1'],
+                                          id_persona2=data['id_persona2'],
+                                          creado=data['creado'])
 
-    persona1 = relationship('Usuario', foreign_keys=[id_persona1])
-    persona2 = relationship('Usuario', foreign_keys=[id_persona2])
+        db.session.add(nueva_conversacion)
+        try:
+            db.session.commit()
+            return {'message': 'Conversación creada exitosamente'}, 201
+        except exc.IntegrityError:
+            db.session.rollback()
+            return {'message': 'Error: Ya existe una conversación con esos participantes'}, 400
+
+    def put(self, id_conversacion):
+        conversacion = Conversacion.query.filter_by(id_conversacion=id_conversacion).first()
+        if conversacion:
+            data = request.get_json()
+
+            conversacion.id_persona1 = data.get('id_persona1', conversacion.id_persona1)
+            conversacion.id_persona2 = data.get('id_persona2', conversacion.id_persona2)
+            conversacion.creado = data.get('creado', conversacion.creado)
+
+            db.session.commit()
+
+            return {'message': 'Conversación modificada exitosamente'}, 200
+        else:
+            return {'message': 'Conversación no encontrada'}, 404

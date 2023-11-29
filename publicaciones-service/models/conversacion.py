@@ -1,16 +1,15 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
+import perfil
 
 Base = declarative_base()
 
 
-class Conversacion(Base):
-    __tablename__ = 'conversacion'
+class Conversacion(db.Model):
+    id_conversacion = db.Column(db.Integer, primary_key=True)
+    id_persona1 = db.Column(db.Integer, db.ForeignKey('usuario.id_usuario'))
+    id_persona1 = db.Column(db.Integer, db.ForeignKey('usuario.id_usuario'))
+    id_persona2 = db.Column(db.Integer)
+    creado = db.Column(db.DateTime)
 
-    id_conversacion = Column(Integer, primary_key=True)
-    id_persona1 = Column(Integer, ForeignKey('perfil.Id_usuario'))
-    id_persona2 = Column(Integer, ForeignKey('perfil.Id_usuario'))
-    Creado = Column(DateTime)
-
-    persona1 = relationship('Usuario', foreign_keys=[id_persona1])
-    persona2 = relationship('Usuario', foreign_keys=[id_persona2])
+db.create_all()
