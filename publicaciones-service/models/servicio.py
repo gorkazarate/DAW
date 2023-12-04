@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from models import Base
+from sqlalchemy.ext.declarative import declarative_base
 
+
+Base = declarative_base()
 
 class Servicio(Base):
     __tablename__ = 'servicio'  # Ajusta este nombre según tu base de datos
@@ -12,4 +14,3 @@ class Servicio(Base):
     descripcion = Column(String)
 
 
-db.create_all()

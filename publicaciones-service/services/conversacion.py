@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 import pymysql
+from flask_restful import Resource
+
 pymysql.install_as_MySQLdb()
 
 class ConversacionResource(Resource):

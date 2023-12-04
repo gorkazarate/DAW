@@ -1,10 +1,12 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 import pymysql
+from flask_restful import Resource
+
 pymysql.install_as_MySQLdb()
 
 
-class LikeResource(Resource):
+class LikesResource(Resource):
     def get(self, id_like):
         like = Like.query.filter_by(id_like=id_like).first()
         if like:

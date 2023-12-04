@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
+from flask_restful import Resource
 
 import pymysql
 pymysql.install_as_MySQLdb()

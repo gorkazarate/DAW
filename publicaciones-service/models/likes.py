@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from models import Base
+from sqlalchemy.ext.declarative import declarative_base
 
+
+Base = declarative_base()
 class Like(Base):
     __tablename__ = 'likes'
 
@@ -12,4 +14,3 @@ class Like(Base):
     fecha = Column(DateTime)
 
 
-db.create_all()

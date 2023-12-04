@@ -1,7 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from models import Base
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
+Base = declarative_base()
 
 class Conversacion(Base):
     __tablename__ = 'conversacion'
