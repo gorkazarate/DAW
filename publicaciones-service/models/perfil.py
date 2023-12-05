@@ -12,7 +12,7 @@ from publicaciones_services import db  # Asegúrate de tener la importación cor
 Base = declarative_base()
 
 class Usuario(db.Model):
-    __tablename__ = 'usuario'
+    __tablename__ = 'perfil'
 
     Id_usuario = db.Column(db.Integer, primary_key=True)
     nombre_completo = db.Column(db.String)
