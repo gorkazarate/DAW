@@ -110,7 +110,7 @@ router.get('/auth/google/callback',
       }
     })();
     
-    res.redirect(301,'http://localhost:8000/login?token=' + token);
+    res.redirect(301,'http://localhost:8000');
 
 });
 

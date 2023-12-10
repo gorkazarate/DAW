@@ -1,9 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from publicaciones-services import db
+from publicaciones_services import db
 
-Base = declarative_base()
 
 class Servicio(Base):
     __tablename__ = 'servicio'

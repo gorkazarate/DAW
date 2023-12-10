@@ -7,9 +7,8 @@ from publicaciones-services import db
 import pymysql
 from sqlalchemy import Column, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
-from publicaciones_services import db  # Asegúrate de tener la importación correcta
+from publicaciones_services import db
 
-Base = declarative_base()
 
 class Usuario(db.Model):
     __tablename__ = 'perfil'

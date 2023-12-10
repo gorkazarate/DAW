@@ -2,7 +2,8 @@ from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from publicaciones_services import db  # Asegúrate de tener la importación correcta
+from publicaciones_services import db
+
 
 class Conversacion(db.Model):
     __tablename__ = 'conversacion'

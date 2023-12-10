@@ -1,9 +1,8 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from publicaciones-services import db
-
-Base = declarative_base()
+from datetime import datetime
+from __init__ import db
 
 class Publicacion(db.Model):
     __tablename__ = 'publicacion'  # Ajusta este nombre según tu base de datos
