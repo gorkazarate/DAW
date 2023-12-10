@@ -31,3 +31,5 @@ class Usuario(db.Model):
 
     def __repr__(self):
         return f'Usuario(Id_usuario={self.Id_usuario}, nombre_completo={self.nombre_completo}, cumpleaño={self.cumpleaño}, numerotlf={self.numerotlf}, dirección={self.dirección}, numlikes={self.numlikes}, user_id={self.user_id})'
+
+db.create_all()

@@ -19,3 +19,5 @@ class Servicio(Base):
 
     def __repr__(self):
         return f"Servicio(servicio_id={self.servicio_id}, titulo='{self.titulo}', foto='{self.foto}', descripcion='{self.descripcion}')"
+
+db.create_all()

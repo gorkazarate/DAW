@@ -19,3 +19,5 @@ class Conversacion(db.Model):
 
     def __repr__(self):
         return f'Conversacion(id_conversacion={self.id_conversacion}, id_persona1={self.id_persona1}, id_persona2={self.id_persona2}, creado={self.creado})'
+
+db.create_all()

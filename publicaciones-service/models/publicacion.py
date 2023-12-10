@@ -27,3 +27,5 @@ class Publicacion(db.Model):
 
     def __repr__(self):
         return f"Publicacion(idpost={self.idpost}, Titulo='{self.Titulo}', texto='{self.texto}', empieza={self.empieza}, termina={self.termina}, usuario_id={self.usuario_id}, servicio_id={self.servicio_id})"
+
+db.create_all()

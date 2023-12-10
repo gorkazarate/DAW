@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import requests
 import json
 from flask import (render_template,Blueprint,flash, g, redirect, request,url_for)
-
+from __init__ import app
 from views.blog import blog
 
 import json
@@ -14,7 +14,6 @@ import os
 with open('../keys.json') as f:
   keys = json.load(f)
    
-app = Flask(__name__)
 api = Api(app)
 
 

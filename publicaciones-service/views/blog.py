@@ -16,7 +16,7 @@ def get_user(id):
 def view_post():
     posts = publicacion.query.all()
     # Elimina el commit innecesario
-    return render_template('opciones.html', posts=posts)
+    return render_template('opciones.html', posts=posts, get_user=get_user)
 
 @blog.route('/create_post', methods=('GET', 'POST'))  # Corrige la ruta de la ruta
 def crear_post():
@@ -44,3 +44,14 @@ def crear_post():
             return redirect(url_for('blog.view_post'))
 
     return render_template('create_post.html')
+
+def get_post(id):
+    post= publicacion.query.get_or_404
+    return post
+
+
+@blog.route('/blog/delete/<int:id>')
+def delete(id):
+    post=get_post(id)
+    db.session.delete(post)
+    db.session.commit()

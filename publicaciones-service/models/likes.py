@@ -19,3 +19,5 @@ class Like(db.Model):
 
     def __repr__(self):
         return f'Like(id_like={self.id_like}, id_usuarioorigen={self.id_usuarioorigen}, id_usuariodestino={self.id_usuariodestino})'
+
+db.create_all()
