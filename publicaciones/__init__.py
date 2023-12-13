@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object('config.DevelopmentConfig')
+app.config['STATIC_FOLDER'] = 'static'
+
 
 db = SQLAlchemy(app)  # Crear la instancia de SQLAlchemy asociada a tu aplicación
 
@@ -16,7 +18,6 @@ app.register_blueprint(blog)
 
 # En algún otro archivo o script (por ejemplo, manage.py)
 
-from __init__ import app, db
 
 # Asegúrate de ejecutar esto dentro del contexto de la aplicación Flask
 with app.app_context():

@@ -3,63 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post.css') }}">
     <title>Publicaciones</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        #publicaciones-container {
-            width: 80%;
-            max-width: 800px;
-        }
-
-        .publicacion {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        .publicacion h2 {
-            margin-bottom: 5px;
-        }
-
-        .publicacion p {
-            margin-bottom: 10px;
-        }
-
-        #opciones-button {
-            margin-top: 20px;
-        }
-    </style>
 </head>
 <body>
     <h1>Publicaciones</h1>
+    <ul>
+        <!-- Iterar sobre las publicaciones y mostrar la información -->
+        <!-- Ejemplo: -->
 
-    <div id="publicaciones-container">
-        {% if publicaciones %}
-            {% for publicacion in publicaciones %}
-                <div class="publicacion">
-                    <h2>{{ publicacion.Titulo }}</h2>
-                    <p>{{ publicacion.texto }}</p>
-                    <p>Publicado por {{ publicacion.usuario_id }} el {{ publicacion.created.strftime('%Y-%m-%d') }}</p>
-                    <p>{{publicacion.servicio_id }}   </p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No hay publicaciones disponibles.</p>
-        {% endif %}
-    </div>
-
-    <!-- Agregamos un botón para ir a las opciones -->
-    <button onclick="location.href='/opciones'">Ir a Opciones</button>
+        {% for post in posts %}
+            <h2>{{ post.Titulo }}</h2>
+            <p>{{ post.texto }}</p>
+    <!-- Lógica para mostrar la imagen según el servicio_id -->
+            {% if post.servicio_id == '1' %}
+                <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1">
+            {% elif post.servicio_id == '2' %}
+                <img src="{{ url_for('static', filename='imagenes/imagen_servicio_2.jpg') }}" alt="Servicio 2">
+            {% elif post.servicio_id == '3' %}
+                <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3">
+            {% endif %}
+        {% endfor %}    
+        
+    </ul>
+    <button onclick="location.href='/opciones'">Volver opciones</button>
+    <button onclick="location.href='/create_post'">Crear publicacion</button>
 </body>
 </html>

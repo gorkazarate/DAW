@@ -1,0 +1,59 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3498db;  /* Fondo azul para la cabecera */
+    color: #fff;  /* Texto blanco para la cabecera */
+    text-align: center;
+    padding: 10px;
+}
+
+img {
+    vertical-align: left;
+}
+
+h1 {
+    display: inline-block;
+    margin: 0;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+form {
+    padding: 20px;
+    border: 1px solid #3498db;  /* Borde azul para el formulario */
+    border-radius: 5px;
+}
+x   
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input,
+textarea,
+select,
+button {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2980b9;  /* Cambio de color al pasar el mouse */
+}

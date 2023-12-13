@@ -94,13 +94,13 @@ router.get('/auth/google/callback',
       body: userInfo
     };
      // Peticion postUser al servicio Flask en el puerto 8000
-     try {
+    /* try {
       await axios.post('http://localhost:8000/api/v1/external-user', userInfo);
       console.log('Usuario enviado al servicio Flask');
     } catch (error) {
       console.error('Error al enviar usuario al servicio Flask:', error.message);
     }
-
+*/
     let userUrl = 'http://127.0.0.1:9090/api/v1/user/' + userInfo['_id'];
     // Funcion para consultar si existe en la BD el usuario, si no existe se añade
     // Se hace uso de la API proporcionada por el propio microservicio
@@ -117,8 +117,8 @@ router.get('/auth/google/callback',
         console.log("El usuario ya existe en la BD");
       }
     })();
-    
-    res.redirect(301,'http://localhost:8080/login?token=' + token);
+    res.redirect(301,'http://localhost:8000')
+    //res.redirect(301,'http://localhost:8000/login?token=' + token /*+ '&username=' + userProfile['displayName']*/);
 
 });
 

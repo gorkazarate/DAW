@@ -3,6 +3,9 @@ from werkzeug.exceptions import abort
 from models.publicacion import Publicacion
 from models.perfil import Usuario
 from __init__ import db
+from flask import current_app, session
+from datetime import datetime
+
 
 blog = Blueprint('blog', __name__)
 
@@ -13,9 +16,19 @@ def opciones():
     print("llega")
     return render_template('opciones.html')
 
+#@blog.route('/api/receive-user-info', methods=['POST'])
+#def receive_user_info():
+    # Verify the authenticity of the incoming request
+#    if is_request_valid(request):
+#        user_info = request.json
+#        # Process user information as needed
+#        print(user_info)
+#        return 'User information received successfully', 200
+    
+
 @blog.route("/view_post")
 def view_post():
-    posts = Publicacion.query.all()
+    posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
     return render_template('view_post.html', posts=posts)
 
 @blog.route('/create_post', methods=['GET', 'POST'])
@@ -25,15 +38,13 @@ def create_post():
         titulo = request.form.get('Titulo')
         texto = request.form.get('texto')
         servicio_id = request.form.get('servicio_id')
-         username = current_app.extensions['oauth']['provider'].get_user()
+        username = request.args.get('username')        
+        empieza= datetime.utcnow()
+        termina= request.form.get('termina')
         
-        user = Usuario.query.filter_by(usuario_id=username).first()
 
-        if not user:
-            flash('No has iniciado sesión.')
-            return redirect(url_for('blog.opciones'))
 
-        post = Publicacion(user_id=user.id, Titulo=titulo, texto=texto, servicio_id=servicio_id)
+        post = Publicacion(usuario_id=username, Titulo=titulo, texto=texto, servicio_id=servicio_id,empieza=empieza,termina=termina )
 
         error = None
         if not titulo or not texto or not servicio_id:

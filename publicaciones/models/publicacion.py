@@ -3,18 +3,21 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from __init__ import db
+from models.servicio import Servicio 
+from models.perfil import Usuario 
 
 
 class Publicacion(db.Model):
     __tablename__ = 'publicacion'  # Ajusta este nombre según tu base de datos
 
-    idpost = db.Column(db.Integer, primary_key=True)
+    idpost = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Titulo = db.Column(db.String)
     texto = db.Column(db.String)
     empieza = db.Column(db.DateTime, default=datetime.utcnow)
     termina = db.Column(db.DateTime)
     usuario_id = db.Column(db.String, db.ForeignKey('perfil.Id_usuario'))
-    servicio_id = db.Column(db.Integer)
+    servicio_id = db.Column(db.Integer, db.ForeignKey('servicio.servicio_id'))
+    servicio = db.relationship('Servicio', backref=db.backref('publicaciones', lazy=True))
 
 
 
