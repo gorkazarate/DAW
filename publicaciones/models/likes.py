@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from publicaciones_services import db
+from publicaciones import db
 
 
 
@@ -20,4 +20,3 @@ class Like(db.Model):
     def __repr__(self):
         return f'Like(id_like={self.id_like}, id_usuarioorigen={self.id_usuarioorigen}, id_usuariodestino={self.id_usuariodestino})'
 
-db.create_all()

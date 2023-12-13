@@ -18,12 +18,5 @@ api = Api(app)
 
 
 
-
-app.register_blueprint(blog)
-
-with app.app_context():
-    DBSession = sessionmaker(bind=db.engine)
-    session = DBSession()
-
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from publicaciones_services import db
+from publicaciones import db
 
 
 class Servicio(Base):
@@ -20,4 +20,3 @@ class Servicio(Base):
     def __repr__(self):
         return f"Servicio(servicio_id={self.servicio_id}, titulo='{self.titulo}', foto='{self.foto}', descripcion='{self.descripcion}')"
 
-db.create_all()

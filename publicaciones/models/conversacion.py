@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from publicaciones_services import db
+from publicaciones import db
 
 
 class Conversacion(db.Model):
@@ -20,4 +20,4 @@ class Conversacion(db.Model):
     def __repr__(self):
         return f'Conversacion(id_conversacion={self.id_conversacion}, id_persona1={self.id_persona1}, id_persona2={self.id_persona2}, creado={self.creado})'
 
-db.create_all()
+

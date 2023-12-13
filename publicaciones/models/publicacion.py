@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from __init__ import db
 
+
 class Publicacion(db.Model):
     __tablename__ = 'publicacion'  # Ajusta este nombre según tu base de datos
 
@@ -12,7 +13,7 @@ class Publicacion(db.Model):
     texto = db.Column(db.String)
     empieza = db.Column(db.DateTime, default=datetime.utcnow)
     termina = db.Column(db.DateTime)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('perfil.Id_usuario'))
+    usuario_id = db.Column(db.String, db.ForeignKey('perfil.Id_usuario'))
     servicio_id = db.Column(db.Integer)
 
 
@@ -28,4 +29,3 @@ class Publicacion(db.Model):
     def __repr__(self):
         return f"Publicacion(idpost={self.idpost}, Titulo='{self.Titulo}', texto='{self.texto}', empieza={self.empieza}, termina={self.termina}, usuario_id={self.usuario_id}, servicio_id={self.servicio_id})"
 
-db.create_all()

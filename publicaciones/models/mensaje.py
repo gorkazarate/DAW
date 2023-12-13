@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
-from publicaciones_services import db
+from publicaciones import db
 
 
 
@@ -24,4 +24,3 @@ class Mensaje(db.Model):
 
     def __repr__(self):
         return f'Mensaje(id_mensaje={self.id_mensaje}, contenido={self.contenido}, emisor_id={self.emisor_id}, fecha_envio={self.fecha_envio}, conversacion_id={self.conversacion_id})'
-db.create_all()

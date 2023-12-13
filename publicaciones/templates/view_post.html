@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicaciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #publicaciones-container {
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .publicacion {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .publicacion h2 {
+            margin-bottom: 5px;
+        }
+
+        .publicacion p {
+            margin-bottom: 10px;
+        }
+
+        #opciones-button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Publicaciones</h1>
+
+    <div id="publicaciones-container">
+        {% if publicaciones %}
+            {% for publicacion in publicaciones %}
+                <div class="publicacion">
+                    <h2>{{ publicacion.Titulo }}</h2>
+                    <p>{{ publicacion.texto }}</p>
+                    <p>Publicado por {{ publicacion.usuario_id }} el {{ publicacion.created.strftime('%Y-%m-%d') }}</p>
+                    <p>{{publicacion.servicio_id }}   </p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay publicaciones disponibles.</p>
+        {% endif %}
+    </div>
+
+    <!-- Agregamos un botón para ir a las opciones -->
+    <button onclick="location.href='/opciones'">Ir a Opciones</button>
+</body>
+</html>

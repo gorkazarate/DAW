@@ -62,15 +62,15 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://127.0.0.1:9090/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-      userProfile = profile;
-      token = accessToken;
-      return done(null, userProfile, token);
-  }
+    userProfile = profile;
+    token = accessToken;
+    return done(null, userProfile, token);
+}
 ));
  
 router.get('/auth/google', 
   passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
+
 router.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/error' }),
   async function(req, res) {
@@ -93,6 +93,14 @@ router.get('/auth/google/callback',
       cache: 'default',
       body: userInfo
     };
+     // Peticion postUser al servicio Flask en el puerto 8000
+     try {
+      await axios.post('http://localhost:8000/api/v1/external-user', userInfo);
+      console.log('Usuario enviado al servicio Flask');
+    } catch (error) {
+      console.error('Error al enviar usuario al servicio Flask:', error.message);
+    }
+
     let userUrl = 'http://127.0.0.1:9090/api/v1/user/' + userInfo['_id'];
     // Funcion para consultar si existe en la BD el usuario, si no existe se añade
     // Se hace uso de la API proporcionada por el propio microservicio
@@ -110,9 +118,10 @@ router.get('/auth/google/callback',
       }
     })();
     
-    res.redirect(301,'http://localhost:8000');
+    res.redirect(301,'http://localhost:8080/login?token=' + token);
 
 });
+
 
 
 
