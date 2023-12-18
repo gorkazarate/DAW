@@ -11,7 +11,7 @@ from flask_cors import CORS
 
 blog = Blueprint('blog', __name__)
 
-@blog.route("/opciones")
+@blog.route("/opciones",methods=['GET','POST'])
 def view_opciones():
     username = session.get('username', None)
     print("Username in opciones:", username)
