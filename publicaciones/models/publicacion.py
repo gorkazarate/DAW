@@ -15,7 +15,7 @@ class Publicacion(db.Model):
     texto = db.Column(db.String)
     empieza = db.Column(db.DateTime, default=datetime.utcnow)
     termina = db.Column(db.DateTime)
-    usuario_id = db.Column(db.String, db.ForeignKey('perfil.Id_usuario'))
+    usuario_id = db.Column(db.String, db.ForeignKey('perfil.usuario_id'))
     servicio_id = db.Column(db.Integer, db.ForeignKey('servicio.servicio_id'))
     servicio = db.relationship('Servicio', backref=db.backref('publicaciones', lazy=True))
 

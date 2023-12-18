@@ -16,6 +16,7 @@
     "alert": "^5.0.10",
     "axios": "^1.6.2",
     "connect": "^3.2.0",
+    "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express-openapi": "^10.0.0",
     "express-session": "^1.17.2",

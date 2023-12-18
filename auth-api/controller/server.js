@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router()
 var usersController = require('./Users');
 
+
 const YAML = require('yamljs');
 var swaggerUi = require("swagger-ui-express");
 var swaggerDoc = YAML.load('./api/openapi.yaml');
@@ -11,6 +12,12 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 const axios = require('axios');
+const cors = require('cors');
+
+const app = express();
+
+// Enable All CORS Requests for simplicity
+app.use(cors());
 
 // ###########  API  ########### //
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
@@ -108,6 +115,7 @@ router.get('/auth/google/callback',
       const user = await axios.get(userUrl, getUserRequest);
       // Si el usuario llega como 'undefined', significa que no existe en la
       // BD por lo que lo añadiremos
+
       if(user.data === 'undefined'){
         (async () => {
           axios.post(userUrl, postUserRequest);
@@ -117,7 +125,24 @@ router.get('/auth/google/callback',
         console.log("El usuario ya existe en la BD");
       }
     })();
-    res.redirect(301,'http://localhost:8000')
+/*
+    axios.post('http://localhost:8000/', userInfo)
+    .then(response => {
+      // If the POST request is successful, send the response back to the client
+      res.send(response.data);
+      console.log('he llegado aqui******************');
+    })
+    .catch(error => {
+      // If the POST request fails, send the error back to the client
+      res.status(500).send(error.message);
+    });
+
+*/
+
+
+
+
+    res.redirect(301,'http://localhost:8000?username='+ userInfo.full_name+'&userid='+ userInfo._id)
     //res.redirect(301,'http://localhost:8000/login?token=' + token /*+ '&username=' + userProfile['displayName']*/);
 
 });
