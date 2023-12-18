@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Perfil</title>
+</head>
+<body>
+    <h1>Crear Perfil</h1>
+    
+    <form method="post" action="{{ url_for('perfil.crear_perfil') }}">
+        <label for="nombre_completo">Nombre Completo:</label>
+        <input type="text" name="nombre_completo" required><br>
+        
+        <label for="cumpleaños">Cumpleaños:</label>
+        <input type="date" name="cumpleaños" required><br>
+
+        <label for="numerotlf">Número de Teléfono:</label>
+        <input type="text" name="numerotlf" required><br>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" name="direccion" required><br>
+
+        
+
+        <input type="submit" value="Guardar Perfil">
+    </form>
+    
+    <button onclick="location.href='/opciones'">Volver Opciones</button>
+</body>
+</html>

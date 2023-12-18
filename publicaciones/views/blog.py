@@ -11,25 +11,12 @@ from flask_cors import CORS
 
 blog = Blueprint('blog', __name__)
 
+@blog.route("/opciones")
+def view_opciones():
+    username = session.get('username', None)
+    print("Username in opciones:", username)
 
-@blog.route('/', methods=['GET','POST'])
-@blog.route('/opciones', methods=['GET', 'POST'])
-def opciones():
-    print("llega")
- 
-    username = request.args.get('username', default=None)
-    userid = request.args.get('userid', default=None)
-    if username is not None and userid is not None:
-        # Almacena el username en la sesión
-        session['username'] = username
-        # Redirige a create_post incluyendo el username en la URL
-        return redirect(url_for('blog.create_post'))
-    else:
-        return 'Param not provided'
-
-    return render_template('opciones.html',username=username)
-
-
+    return render_template('opciones.html', username=username)
 
 @blog.route("/view_post")
 def view_post():
@@ -40,6 +27,7 @@ def view_post():
 def create_post():
     
     username = session.get('username', None)
+    print("Username in create_post:", username)
 
     if request.method == 'POST':
         print('entra')

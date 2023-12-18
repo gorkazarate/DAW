@@ -14,8 +14,10 @@ db = SQLAlchemy(app)  # Crear la instancia de SQLAlchemy asociada a tu aplicaci�
 # Aquí puedes realizar otras configuraciones si es necesario
 
 from views.blog import blog
+from views.perfil import perfil
 
 app.register_blueprint(blog)
+app.register_blueprint(perfil)
 
 # No ejecutes db.create_all() aquí
 

@@ -24,6 +24,10 @@
             {% elif post.servicio_id == '3' %}
                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3">
             {% endif %}
+            
+            <button onclick="location.href='/conversaciones/{{ post.id }}'">Conversaciones</button>
+            <button onclick="location.href='/perfil/{{ post.usuario_id }}'">Perfil</button>
+       
         {% endfor %}    
         
     </ul>
