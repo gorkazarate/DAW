@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Perfil</title>
+</head>
+<body>
+    <h1>Perfil de {{ usuario.nombre_completo }}</h1>
+    <p>Numero de Likes: {{ usuario.numLikes }}</p>
+
+    <button id="likeButton">Like</button>
+
+    <script>
+        document.getElementById('likeButton').addEventListener('click', function() {
+            // Realizar una solicitud AJAX para dar like al perfil
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/dar_like/{{ usuario.Id_usuario }}', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Actualizar el número de likes en la interfaz
+                    var likesElement = document.querySelector('p');
+                    likesElement.textContent = 'Numero de Likes: ' + xhr.responseText;
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

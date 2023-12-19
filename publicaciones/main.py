@@ -7,6 +7,7 @@ import json
 from flask import (render_template,Blueprint,flash, g, redirect, request,url_for)
 from __init__ import app
 from views.blog import blog
+from views.perfil import perfil
 
 import json
 import os

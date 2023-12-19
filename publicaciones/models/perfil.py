@@ -19,7 +19,7 @@ class Usuario(db.Model):
     numlikes = db.Column(db.Integer)
     usuario_id = db.Column(db.String, unique=True)
 
-    def __init__(self, username, cumpleaño, numerotlf,numlikes, direccion, usuario_id):
+    def __init__(self, username, cumpleaños, numerotlf,numlikes, direccion, usuario_id):
         self.nombre_completo = username
         self.cumpleaños = cumpleaños
         self.numerotlf = numerotlf

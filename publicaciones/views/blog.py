@@ -14,9 +14,10 @@ blog = Blueprint('blog', __name__)
 @blog.route("/opciones",methods=['GET','POST'])
 def view_opciones():
     username = session.get('username', None)
+    userid= session.get('userid',None)
     print("Username in opciones:", username)
 
-    return render_template('opciones.html', username=username)
+    return render_template('opciones.html', username=username,userid=userid)
 
 @blog.route("/view_post")
 def view_post():
@@ -27,6 +28,8 @@ def view_post():
 def create_post():
     
     username = session.get('username', None)
+    userid= session.get('userid',None)
+
     print("Username in create_post:", username)
 
     if request.method == 'POST':
@@ -53,7 +56,7 @@ def create_post():
             db.session.commit()
             return redirect(url_for('blog.view_post'))
 
-    return render_template('create_post.html', username=username)
+    return render_template('create_post.html', username=username, userid=userid)
 
 def delete_post(id):
     post = Publicacion.query.get_or_404(id)
