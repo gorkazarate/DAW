@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from __init__ import db
 from models.servicio import Servicio 
-from models.perfil import Usuario 
+from models.perfil import Perfil 
 
 
 class Publicacion(db.Model):

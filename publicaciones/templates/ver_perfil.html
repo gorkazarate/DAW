@@ -6,21 +6,35 @@
     <title>Ver Perfil</title>
 </head>
 <body>
-    <h1>Perfil de {{ usuario.nombre_completo }}</h1>
-    <p>Numero de Likes: {{ usuario.numLikes }}</p>
+    <h1>Perfil de {{ perfil.nombre_completo }}</h1>
+    <p>Numero de Likes: <span id="numLikes">{{ perfil.numLikes }}</span></p>
+    <p>Cumpleaños: {{ perfil.cumpleaños }}</p>
+    <p>Numero de Teléfono: {{ perfil.numerotlf }}</p>
+    <p>Dirección: {{ perfil.direccion }}</p>
 
     <button id="likeButton">Like</button>
+    <button onclick="window.location.href='/view_post'">Volver a View Post</button>
 
     <script>
         document.getElementById('likeButton').addEventListener('click', function() {
+            // Obtener el número actual de likes antes de la solicitud AJAX
+            var numLikesElement = document.getElementById('numLikes');
+            var currentNumLikes = parseInt(numLikesElement.textContent);
+
             // Realizar una solicitud AJAX para dar like al perfil
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/dar_like/{{ usuario.Id_usuario }}', true);
+            xhr.open('POST', '/dar_like/{{ perfil.id_usuario }}', true);
             xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Actualizar el número de likes en la interfaz
-                    var likesElement = document.querySelector('p');
-                    likesElement.textContent = 'Numero de Likes: ' + xhr.responseText;
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Actualizar el número de likes en la interfaz con el valor actualizado
+                        numLikesElement.textContent = xhr.responseText;
+                    } else {
+                        // Revertir al valor anterior en caso de error
+                        numLikesElement.textContent = currentNumLikes;
+                        // Manejar el error de la solicitud AJAX
+                        console.error('Error en la solicitud AJAX:', xhr.status, xhr.statusText);
+                    }
                 }
             };
             xhr.send();

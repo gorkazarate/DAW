@@ -9,8 +9,8 @@ class Conversacion(db.Model):
     __tablename__ = 'conversacion'
 
     id_conversacion = db.Column(db.Integer, primary_key=True)
-    id_persona1 = db.Column(db.Integer, db.ForeignKey('perfil.id_usuario'))
-    id_persona2 = db.Column(db.Integer, db.ForeignKey('perifl.id_usuario'))
+    id_persona1 = db.Column(db.Integer)
+    id_persona2 = db.Column(db.Integer)
     creado = db.Column(db.DateTime, default=datetime.utcnow)
   
     def __init__(self, id_persona1, id_persona2):

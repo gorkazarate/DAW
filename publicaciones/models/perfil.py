@@ -4,29 +4,29 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Date, F
 from flask_restful import Resource
 from __init__ import db
 
-from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy.ext.declarative import declarative_base
-
-
-class Usuario(db.Model):
+Base = declarative_base()
+class Perfil(db.Model):
     __tablename__ = 'perfil'
 
-    Id_usuario = db.Column(db.Integer, primary_key=True)
-    nombre_completo = db.Column(db.String)
-    cumpleaños = db.Column(db.Date)
-    numerotlf = db.Column(db.String)
-    dirección = db.Column(db.String)
+    id_usuario = db.Column(String(20), primary_key=True) 
+    nombre_completo = db.Column(db.String(255))
+    cumpleaños = db.Column(db.Date)  # Corrected column name
+    numerotlf = db.Column(db.String(20))
+    direccion = db.Column(db.String(255))
     numlikes = db.Column(db.Integer)
-    usuario_id = db.Column(db.String, unique=True)
+    usuario_id = db.Column(db.String(250))
 
-    def __init__(self, username, cumpleaños, numerotlf,numlikes, direccion, usuario_id):
-        self.nombre_completo = username
+    def __init__(self, id_usuario, nombre_completo, cumpleaños, numerotlf, direccion, numlikes, usuario_id):
+        self.id_usuario = id_usuario
+        self.nombre_completo = nombre_completo
         self.cumpleaños = cumpleaños
         self.numerotlf = numerotlf
-        self.dirección = direccion
+        self.direccion = direccion
         self.numlikes = numlikes
         self.usuario_id = usuario_id
 
-    def __repr__(self):
-        return f'Usuario(Id_usuario={self.Id_usuario}, nombre_completo={self.nombre_completo}, cumpleaño={self.cumpleaño}, numerotlf={self.numerotlf}, dirección={self.dirección}, numlikes={self.numlikes}, usuario_id={self.usuario_id})'
+    def obtener_likes(self):
+        return db.session.query(func.sum(Perfil.numlikes)).filter_by(id_usuario=self.id_usuario).scalar() or 0
 
+    def __repr__(self):
+        return f'Perfil(id_usuario={self.id_usuario}, nombre_completo={self.nombre_completo}, cumpleaños={self.cumpleaños}, numerotlf={self.numerotlf}, direccion={self.direccion}, numlikes={self.numlikes}, usuario_id={self.usuario_id})'

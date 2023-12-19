@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, flash, g, redirect, request, url_for, session
 from werkzeug.exceptions import abort
 from models.publicacion import Publicacion
-from models.perfil import Usuario
+from models.perfil import Perfil
 from __init__ import db
 from flask import current_app, session
 from datetime import datetime
@@ -11,8 +11,8 @@ from flask_cors import CORS
 
 blog = Blueprint('blog', __name__)
 
-@blog.route("/opciones",methods=['GET','POST'])
-def view_opciones():
+@blog.route('/opciones/<string:username>/<int:userid>')
+def view_opciones(username,userid):
     username = session.get('username', None)
     userid= session.get('userid',None)
     print("Username in opciones:", username)

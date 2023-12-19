@@ -13,9 +13,9 @@
         <!-- Ejemplo: -->
 
         {% for post in posts %}
-            <h2>{{ post.Titulo }}</h2>
+            <h2>{{ post.Titulo }} - {{ post.usuario_id }}</h2>
             <p>{{ post.texto }}</p>
-            <p>{{post.usuario_id}}</p>
+            
     <!-- Lógica para mostrar la imagen según el servicio_id -->
             {% if post.servicio_id == '1' %}
                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1">
@@ -26,7 +26,7 @@
             {% endif %}
             
             <button onclick="location.href='/conversaciones/{{ post.id }}'">Conversaciones</button>
-            <button onclick="location.href='/perfil/{{ post.usuario_id }}'">Perfil</button>
+            <button onclick="location.href='/ver_perfil/{{ post.usuario_id|replace(' ', '%20') }}'">Perfil</button>
        
         {% endfor %}    
         
