@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/create_post.css') }}?v=1">
-
+    <!-- Incluir Flatpickr desde CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <title>Crear Publicación</title>
 </head>
 <body>
@@ -23,18 +26,53 @@
             <label for="servicio_id">Tipo de servicio:</label>
             <select id="servicio_id" name="servicio_id">
                 <option value="1">Ocio</option>
-                <option value="2">Compañia</option>
+                <option value="2">Compañía</option>
                 <option value="3">Tareas domésticas</option>
             </select>
             <br>
-            <label for="termina">Fecha limite de publicacion:</label>
-            <input type="datetime-local" id="termina" name="termina" required>
-            <br>
+            <label for="fechas">Fechas y horas:</label>
+            <input type="text" id="fechas" name="fechas" data-mode="multiple">
+            <p>Selecciona fechas y horas.</p>
+            
+            <!-- Contenedores para mostrar las horas de inicio y fin -->
+            <div id="contenedor_horas_inicio"></div>
+            <div id="contenedor_horas_fin"></div>
+            
             <button type="submit">Crear Publicación</button>
-        </form>
-    </main>
-    <script>
-        // Puedes agregar scripts adicionales aquí si es necesario
-    </script>
-</body>
-</html>
+            
+            <script>
+                // Inicializar Flatpickr para fechas y horas
+                flatpickr('#fechas', {
+                    enableTime: false,
+                    dateFormat: 'Y-m-d ',
+                    mode: 'multiple',
+                    onClose: function (selectedDates) {
+                        mostrarHorasSegunFechas(selectedDates);
+                    }
+                });
+            
+                // Función para mostrar las horas basadas en las fechas seleccionadas
+                function mostrarHorasSegunFechas(selectedDates) {
+                    var contenedorHorasInicio = document.getElementById('contenedor_horas_inicio');
+                    var contenedorHorasFin = document.getElementById('contenedor_horas_fin');
+                    contenedorHorasInicio.innerHTML = ''; // Limpiar contenido anterior
+                    contenedorHorasFin.innerHTML = ''; // Limpiar contenido anterior
+            
+                    // Puedes realizar lógica adicional aquí según las fechas seleccionadas
+            
+                    // Ejemplo: Mostrar un rango fijo de horas para cada fecha
+                    selectedDates.forEach(function (fecha) {
+                        contenedorHorasInicio.innerHTML += '<label for="hora_inicio_' + fecha + '">Hora de inicio para ' + fecha + ':</label>';
+                        contenedorHorasInicio.innerHTML += '<input type="time" id="hora_inicio_' + fecha + '" name="hora_inicio_' + fecha + '" required>';
+                        contenedorHorasInicio.innerHTML += '<br>';
+            
+                        contenedorHorasFin.innerHTML += '<label for="hora_fin_' + fecha + '">Hora de fin para ' + fecha + ':</label>';
+                        contenedorHorasFin.innerHTML += '<input type="time" id="hora_fin_' + fecha + '" name="hora_fin_' + fecha + '" required>';
+                        contenedorHorasFin.innerHTML += '<br>';
+                    });
+                }
+            </script>
+            </form>
+            </main>
+            </body>
+            </html>

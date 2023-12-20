@@ -66,7 +66,7 @@ const GOOGLE_CLIENT_SECRET = keys['GOOGLE_CLIENT_SECRET'];
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:9090/auth/google/callback"
+    callbackURL: "http://127.0. .1:9090/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     userProfile = profile;
@@ -85,6 +85,8 @@ router.get('/auth/google/callback',
     var userInfo =  { _id: userProfile['id'],
                       full_name: userProfile['displayName'],
                       email: userProfile['emails'],
+                      numtelefono:userProfile['displayTelefono'],
+                      fechanacimiento:userProfile['displayFecha']
                     }
 
     // Peticion getUser
@@ -125,19 +127,7 @@ router.get('/auth/google/callback',
         console.log("El usuario ya existe en la BD");
       }
     })();
-/*
-    axios.post('http://localhost:8000/', userInfo)
-    .then(response => {
-      // If the POST request is successful, send the response back to the client
-      res.send(response.data);
-      console.log('he llegado aqui******************');
-    })
-    .catch(error => {
-      // If the POST request fails, send the error back to the client
-      res.status(500).send(error.message);
-    });
 
-*/
 
 
 

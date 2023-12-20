@@ -1,60 +1,75 @@
-from flask import render_template, Blueprint, flash, g, redirect, request, url_for, session
-from werkzeug.exceptions import abort
+from flask import render_template, Blueprint, flash, request, redirect, url_for, session
 from models.publicacion import Publicacion
-from models.perfil import Perfil
 from __init__ import db
-from flask import current_app, session
-from datetime import datetime
-from flask_cors import CORS
-
-
+from datetime import datetime, timedelta
 
 blog = Blueprint('blog', __name__)
 
+@blog.route('/opciones')
+def opciones():
+    return render_template('opciones.html')
+
 @blog.route('/opciones/<string:username>/<int:userid>')
-def view_opciones(username,userid):
+def view_opciones(username, userid):
     username = session.get('username', None)
-    userid= session.get('userid',None)
+    userid = session.get('userid', None)
     print("Username in opciones:", username)
 
-    return render_template('opciones.html', username=username,userid=userid)
+    return render_template('opciones.html', username=username, userid=userid)
 
-@blog.route("/view_post")
+@blog.route("/view_post",methods=['GET','POST'])
 def view_post():
     posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
     return render_template('view_post.html', posts=posts)
 
 @blog.route('/create_post', methods=['GET', 'POST'])
 def create_post():
-    
     username = session.get('username', None)
-    userid= session.get('userid',None)
-
-    print("Username in create_post:", username)
+    userid = session.get('userid', None)
 
     if request.method == 'POST':
-        print('entra')
-        titulo = request.form.get('Titulo')
-        texto = request.form.get('texto')
-        servicio_id = request.form.get('servicio_id')
-        empieza= datetime.utcnow()
-        termina= request.form.get('termina')
-        
+        try:
+            # Obtener los datos del formulario
+            titulo = request.form.get('Titulo')
+            texto = request.form.get('texto')
+            servicio_id = request.form.get('servicio_id')
+            empieza = datetime.utcnow()
+            # Obtener las fechas seleccionadas
+            fechas = request.form.getlist('fechas[]')
 
+            print('antes de procesar fechas')
+            # Procesar cada fecha seleccionada
+            for fecha in fechas:
+                print('después de procesar fechas')
+                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}')
+                hora_fin_str = request.form.get(f'hora_fin_{fecha}')
 
-        post = Publicacion(usuario_id=username, Titulo=titulo, texto=texto, servicio_id=servicio_id,empieza=empieza,termina=termina, )
+                # Ajustar el formato al nuevo formato que incluye horas y minutos
+                fecha_hora_inicio = datetime.strptime(f'{fecha} {hora_inicio_str}', '%Y-%m-%d %H:%M')
+                fecha_hora_fin = datetime.strptime(f'{fecha} {hora_fin_str}', '%Y-%m-%d %H:%M')
 
-        error = None
-        if not titulo or not texto or not servicio_id:
-            error = 'Todos los campos son obligatorios'
+                print(f'Fecha: {fecha}, Hora de inicio: {fecha_hora_inicio}, Hora de fin: {fecha_hora_fin}')
 
-        if error:
-            flash(error)
-        else:
-            db.session.add(post)
-            print('inserta')
-            db.session.commit()
+                # Crear la instancia de Publicacion
+                post = Publicacion(
+                    usuario_id=username,
+                    Titulo=titulo,
+                    texto=texto,
+                    servicio_id=servicio_id,
+                    fechas=f'{fecha_hora_inicio} - {fecha_hora_fin}',
+                    empieza=empieza,
+                )
+
+                # Agregar y commit a la base de datos
+                db.session.add(post)
+                db.session.commit()
+
+            flash('Publicación creada con éxito', 'success')
             return redirect(url_for('blog.view_post'))
+
+        except Exception as e:
+            flash(f'Error al procesar la publicación: {str(e)}', 'error')
+            print(f'Error al procesar la publicación: {str(e)}')
 
     return render_template('create_post.html', username=username, userid=userid)
 
