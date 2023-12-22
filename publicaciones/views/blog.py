@@ -5,15 +5,30 @@ from datetime import datetime, timedelta
 
 blog = Blueprint('blog', __name__)
 
-@blog.route('/opciones')
-def opciones():
-    return render_template('opciones.html')
+@blog.route('/', methods=['GET', 'POST'])
+@blog.route('/inicio', methods=['GET'])
+def view_inicio():
+    # Aquí deberías obtener el username y userid de alguna manera
+    username = request.args.get('username')
+    userid = request.args.get('userid')
+    
+    # Guardamos en sesión
+    session['username'] = username
+    session['userid'] = userid
 
-@blog.route('/opciones/<string:username>/<int:userid>')
-def view_opciones(username, userid):
+    return render_template('inicio.html')
+
+@blog.route('/opciones')
+def view_opciones():
     username = session.get('username', None)
     userid = session.get('userid', None)
-    print("Username in opciones:", username)
+
+    # Almacena los valores en la sesión si se proporcionan en la URL
+    if 'username' in request.args and 'userid' in request.args:
+        username = request.args['username']
+        userid = request.args['userid']
+        session['username'] = username
+        session['userid'] = userid
 
     return render_template('opciones.html', username=username, userid=userid)
 

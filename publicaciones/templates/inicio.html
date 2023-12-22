@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+</head>
+<body>
+
+    <h1>Bienvenido</h1>
+    <p>Continúa rellenando tu perfil o visita las opciones:</p>
+
+    <!-- Botón para redirigir a /perfil -->
+    <a href="{{ url_for('perfil.crear_perfil', username=session['username'], userid=session['userid']) }}">
+        <button type="button">Rellenar Perfil</button>
+    </a>
+
+    <br>
+
+    <!-- Botón para redirigir a /opciones -->
+    <a href="{{ url_for('blog.view_opciones', username=session['username'], userid=session['userid']) }}">
+        <button type="button">Visitar Opciones</button>
+    </a>
+
+</body>
+</html>

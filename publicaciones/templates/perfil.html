@@ -13,7 +13,7 @@
     </header>
 
     <main>
-        <form method="post" action="{{ url_for('perfil.crear_perfil') }}">
+        <form method="post" action="{{ url_for('perfil.crear_perfil', username=session['username'], userid=session['userid']) }}">
             <label for="nombre_completo">Nombre Completo:</label>
             <input type="text" name="nombre_completo" required><br>
             
