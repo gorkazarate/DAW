@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post.css') }}">
-    <title>Publicaciones</title>
+    <!-- ... (código anterior) ... -->
 </head>
 <body>
     <h1>Publicaciones</h1>
+
+    <!-- Formulario de Filtración por usuario_id -->
+    <form action="{{ url_for('blog.view_post') }}" method="get">
+        <label for="filtroUsuario">Filtrar por usuario_id:</label>
+        <input type="text" id="filtroUsuario" name="filtroUsuario">
+        <button type="submit">Filtrar</button>
+        <button type="button" onclick="limpiarFiltro()">Limpiar filtro</button>
+    </form>
+    
+    <script>
+        function limpiarFiltro() {
+            document.getElementById('filtroUsuario').value = '';
+            // Puedes enviar el formulario aquí si quieres que se recargue automáticamente
+            document.forms[0].submit();
+        }
+    </script>
     <ul>
         {% for post in posts %}
             <h2>{{ post.Titulo }} - {{ post.usuario_id }}</h2>
@@ -30,15 +43,18 @@
     <button onclick="location.href='/create_post'">Crear publicación</button>
 
     <script>
-        function marcarConversada(idpost) {
+        function marcarConversada(postId) {
             // Envía una solicitud al servidor para marcar la publicación como conversada
             fetch(`/marcar_conversada/${postId}`, { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
                     // Muestra una alerta con el mensaje personalizado
-                    window.alert(`Se le ha enviado un email a`, post.usuario_id);
+                    window.alert(`Se le ha enviado un email a ${data.usuario_id}`);
                     // Actualiza la interfaz de usuario según sea necesario
                     console.log('Publicación marcada como conversada. Nuevo estado: ', data.conversada);
+    
+                    // Elimina visualmente el elemento de la lista
+                    document.getElementById(`post_${postId}`).style.display = 'none';
                 })
                 .catch(error => {
                     console.error('Error al marcar la publicación como conversada:', error);

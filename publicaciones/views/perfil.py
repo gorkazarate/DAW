@@ -53,4 +53,4 @@ def dar_like(id_usuario):
     # Agregar el perfil a la lista de perfiles que el usuario le dio like
 
     # Devolver el nuevo número de likes como respuesta
-    return jsonify({' ': usuario.numlikes})
+    return jsonify({usuario.numlikes})

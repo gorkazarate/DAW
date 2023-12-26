@@ -57,20 +57,17 @@
                     var contenedorHorasFin = document.getElementById('contenedor_horas_fin');
                     contenedorHorasInicio.innerHTML = ''; // Limpiar contenido anterior
                     contenedorHorasFin.innerHTML = ''; // Limpiar contenido anterior
-            
-                    // Puedes realizar lógica adicional aquí según las fechas seleccionadas
-            
-                    // Ejemplo: Mostrar un rango fijo de horas para cada fecha
-                    selectedDates.forEach(function (fecha) {
-                        contenedorHorasInicio.innerHTML += '<label for="hora_inicio_' + fecha + '">Hora de inicio para ' + fecha + ':</label>';
-                        contenedorHorasInicio.innerHTML += '<input type="time" id="hora_inicio_' + fecha + '" name="hora_inicio_' + fecha + '" required>';
-                        contenedorHorasInicio.innerHTML += '<br>';
-            
-                        contenedorHorasFin.innerHTML += '<label for="hora_fin_' + fecha + '">Hora de fin para ' + fecha + ':</label>';
-                        contenedorHorasFin.innerHTML += '<input type="time" id="hora_fin_' + fecha + '" name="hora_fin_' + fecha + '" required>';
-                        contenedorHorasFin.innerHTML += '<br>';
-                    });
-                }
+
+                selectedDates.forEach(function (fecha) {
+                    contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fecha}">Hora de inicio para ${fecha}:</label>`;
+                    contenedorHorasInicio.innerHTML += `<input type="time" id="hora_inicio_${fecha}" name="hora_inicio_${fecha}" required>`;
+                    contenedorHorasInicio.innerHTML += '<br>';
+
+                    contenedorHorasFin.innerHTML += `<label for="hora_fin_${fecha}">Hora de fin para ${fecha}:</label>`;
+                    contenedorHorasFin.innerHTML += `<input type="time" id="hora_fin_${fecha}" name="hora_fin_${fecha}" required>`;
+                    contenedorHorasFin.innerHTML += '<br>';
+                });
+            }
             </script>
             </form>
             </main>

@@ -32,9 +32,20 @@ def view_opciones():
 
     return render_template('opciones.html', username=username, userid=userid)
 
-@blog.route("/view_post",methods=['GET','POST'])
+@blog.route("/view_post", methods=['GET', 'POST'])
 def view_post():
-    posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
+    # Obtén el valor del parámetro 'filtroUsuario' de la URL
+    filtro_usuario = request.args.get('filtroUsuario', None)
+
+    if filtro_usuario:
+        # Reemplaza los espacios en el usuario_id con "+"
+        filtro_usuario = filtro_usuario.replace('+', ' ')
+        # Filtra las publicaciones por usuario_id si el filtro está presente
+        posts = Publicacion.query.filter_by(usuario_id=filtro_usuario).order_by(Publicacion.empieza.desc()).all()
+    else:
+        # Obtén todas las publicaciones si no hay filtro
+        posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
+
     return render_template('view_post.html', posts=posts)
 
 @blog.route('/create_post', methods=['GET', 'POST'])
@@ -55,13 +66,13 @@ def create_post():
             print('antes de procesar fechas')
             # Procesar cada fecha seleccionada
             for fecha in fechas:
-                print('después de procesar fechas')
                 hora_inicio_str = request.form.get(f'hora_inicio_{fecha}')
                 hora_fin_str = request.form.get(f'hora_fin_{fecha}')
 
-                # Ajustar el formato al nuevo formato que incluye horas y minutos
+    # Ajustar el formato al nuevo formato que incluye horas y minutos
                 fecha_hora_inicio = datetime.strptime(f'{fecha} {hora_inicio_str}', '%Y-%m-%d %H:%M')
                 fecha_hora_fin = datetime.strptime(f'{fecha} {hora_fin_str}', '%Y-%m-%d %H:%M')
+
 
                 print(f'Fecha: {fecha}, Hora de inicio: {fecha_hora_inicio}, Hora de fin: {fecha_hora_fin}')
 
@@ -90,11 +101,11 @@ def create_post():
     return render_template('create_post.html', username=username, userid=userid)
 
 @blog.route('/marcar_conversada/<int:idpost>', methods=['POST'])
-def marcar_conversada(post_id):
+def marcar_conversada(idpost):
     post = Publicacion.query.get_or_404(idpost)
     post.marcada = not post.marcada  # Cambia el estado de conversación
     db.session.commit()
-    return jsonify({'conversada': post.marcada})
+    return jsonify({'conversada': post.marcada, 'usuario_id': post.usuario_id})
 
 @blog.route('/mis_post', methods=['GET'])
 def view_mis_conversaciones():
