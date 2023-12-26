@@ -96,6 +96,17 @@ def marcar_conversada(post_id):
     db.session.commit()
     return jsonify({'conversada': post.marcada})
 
+@blog.route('/mis_post', methods=['GET'])
+def view_mis_conversaciones():
+    # Obtén el usuario actual desde la sesión
+    username = session.get('username', None)
+    userid = session.get('userid', None)
+
+    # Obtén las publicaciones del usuario que han sido marcadas como conversadas
+    mis_conversaciones = Publicacion.query.filter_by(usuario_id=username, marcada=True).all()
+
+    return render_template('mis_post.html', mis_conversaciones=mis_conversaciones)
+
 def delete_post(id):
     post = Publicacion.query.get_or_404(id)
     db.session.delete(post)

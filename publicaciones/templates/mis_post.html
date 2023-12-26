@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Publicaciones Aceptadas/Rechazadas</title>
+</head>
+<body>
+    <h1>Mis Publicaciones Aceptadas/Rechazadas</h1>
+
+    {% if not posts %}
+        <p>No hay publicaciones para mostrar.</p>
+    {% endif %}
+
+    <ul>
+        {% for post in posts %}
+            <div id="post_{{ post.id }}">
+                <h2>{{ post.Titulo }} - {{ post.usuario_id }}</h2>
+                <p>{{ post.texto }}</p>
+                <p>{{ post.fechas }}</p>
+
+                {% if post.servicio_id == '1' %}
+                    <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1">
+                {% elif post.servicio_id == '2' %}
+                    <img src="{{ url_for('static', filename='imagenes/imagen_servicio_2.jpg') }}" alt="Servicio 2">
+                {% elif post.servicio_id == '3' %}
+                    <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3">
+                {% endif %}
+
+                <button onclick="marcarConversada('{{ post.id }}', 'aceptar')">Aceptar</button>
+                <button onclick="marcarConversada('{{ post.id }}', 'rechazar')">Rechazar</button>
+            </div>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function marcarConversada(postId, accion) {
+            // Envía una solicitud al servidor para marcar la publicación como aceptada o rechazada
+            fetch(`/${accion}_conversacion/${postId}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    // Actualiza la interfaz de usuario según sea necesario
+                    console.log(`Conversación ${accion}da con éxito. Nuevo estado: `, data.conversada);
+
+                    // Oculta o elimina el elemento visualmente
+                    document.getElementById(`post_${postId}`).style.display = 'none';
+
+                    // Muestra un mensaje de confirmación
+                    alert(`Conversación ${accion}da con éxito.`);
+                })
+                .catch(error => {
+                    console.error(`Error al ${accion}ar la publicación como conversada:`, error);
+                });
+        }
+    </script>
+</body>
+</html>
