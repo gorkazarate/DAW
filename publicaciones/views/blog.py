@@ -73,6 +73,7 @@ def create_post():
                     servicio_id=servicio_id,
                     fechas=f'{fecha_hora_inicio} - {fecha_hora_fin}',
                     empieza=empieza,
+                    marcada=False,
                 )
 
                 # Agregar y commit a la base de datos
@@ -87,6 +88,13 @@ def create_post():
             print(f'Error al procesar la publicación: {str(e)}')
 
     return render_template('create_post.html', username=username, userid=userid)
+
+@blog.route('/marcar_conversada/<int:idpost>', methods=['POST'])
+def marcar_conversada(post_id):
+    post = Publicacion.query.get_or_404(idpost)
+    post.marcada = not post.marcada  # Cambia el estado de conversación
+    db.session.commit()
+    return jsonify({'conversada': post.marcada})
 
 def delete_post(id):
     post = Publicacion.query.get_or_404(id)
