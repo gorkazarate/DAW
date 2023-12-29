@@ -35,7 +35,7 @@
                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3">
             {% endif %}
             
-            <button onclick="marcarConversada('{{ post.id }}')">Conversar</button>
+            <button onclick="marcarConversada('{{ idpost }}')">Conversar</button>
             <button onclick="location.href='/ver_perfil/{{ post.usuario_id|replace(' ', '%20') }}'">Perfil</button>
         {% endfor %}    
     </ul>
@@ -43,22 +43,22 @@
     <button onclick="location.href='/create_post'">Crear publicación</button>
 
     <script>
-        function marcarConversada(postId) {
-            // Envía una solicitud al servidor para marcar la publicación como conversada
-            fetch(`/marcar_conversada/${postId}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    // Muestra una alerta con el mensaje personalizado
-                    window.alert(`Se le ha enviado un email a ${data.usuario_id}`);
-                    // Actualiza la interfaz de usuario según sea necesario
-                    console.log('Publicación marcada como conversada. Nuevo estado: ', data.conversada);
-    
-                    // Elimina visualmente el elemento de la lista
-                    document.getElementById(`post_${postId}`).style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error al marcar la publicación como conversada:', error);
-                });
+        function marcarConversada(idpost) {
+    // Envía una solicitud al servidor para marcar la publicación como conversada
+        fetch(`/marcar_conversada/${post.idpost}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+            // Muestra una alerta con el mensaje personalizado
+                window.alert(`Se le ha enviado un email a ${data.usuario_id}`);
+            // Actualiza la interfaz de usuario según sea necesario
+                console.log('Publicación marcada como conversada. Nuevo estado: ', data.conversada);
+
+            // Elimina visualmente el elemento de la lista
+                document.getElementById(`post_${idpost}`).style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error al marcar la publicación como conversada:', error);
+            });
         }
     </script>
 </body>

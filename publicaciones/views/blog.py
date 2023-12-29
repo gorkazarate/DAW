@@ -2,6 +2,8 @@ from flask import render_template, Blueprint, flash, request, redirect, url_for,
 from models.publicacion import Publicacion
 from __init__ import db
 from datetime import datetime, timedelta
+from flask import jsonify
+
 
 blog = Blueprint('blog', __name__)
 
@@ -82,7 +84,7 @@ def create_post():
                     Titulo=titulo,
                     texto=texto,
                     servicio_id=servicio_id,
-                    fechas=f'{fecha_hora_inicio} - {fecha_hora_fin}',
+                    fechas = f'{str(fecha_hora_inicio)} - {str(fecha_hora_fin)}',
                     empieza=empieza,
                     marcada=False,
                 )
@@ -102,10 +104,11 @@ def create_post():
 
 @blog.route('/marcar_conversada/<int:idpost>', methods=['POST'])
 def marcar_conversada(idpost):
-    post = Publicacion.query.get_or_404(idpost)
-    post.marcada = not post.marcada  # Cambia el estado de conversación
-    db.session.commit()
-    return jsonify({'conversada': post.marcada, 'usuario_id': post.usuario_id})
+    if request.method == 'POST':
+        post = Publicacion.query.get_or_404(idpost)
+        post.marcada = not post.marcada  # Cambia el estado de conversación
+        db.session.commit()
+        return render_template('view_post',post=post)
 
 @blog.route('/mis_post', methods=['GET'])
 def view_mis_conversaciones():
