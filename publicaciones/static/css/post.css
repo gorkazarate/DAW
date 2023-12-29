@@ -2,68 +2,126 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;  /* Fondo gris claro */
 }
+
 header {
-    background-color: #3498db;  /* Fondo azul para la cabecera */
-    color: #fff;  /* Texto blanco para la cabecera */
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3498db;
+    color: #fff;
     padding: 10px;
 }
+
 img {
-    vertical-align: middle;
+    width: 50px;
+    height: 50px;
 }
 
 h1 {
+    margin: 0;
+    flex-grow: 1;
     text-align: center;
-    color: #000;  /* Texto negro */
-    margin-top: 20px;
-}
-
-
-
-ul{
-    padding: 20px;
-    border: 1px solid #000;  
+    background-color: #3498db; /* Fondo azul para el título principal */
+    color: #fff; /* Letras blancas para el título principal */
+    padding: 10px;
     border-radius: 5px;
 }
 
-.post-item {
-    background-color: #fff;  /* Fondo blanco */
-    margin: 15px;
-    padding: 20px;
-    border: 1px solid #3498db;  /* Borde azul */
+main {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Estilo específico para la sección "Publicaciones" */
+.ul {
+    background-color: #3498db;
+    color: #fff;
+    text-align: left;
+    border-radius: 5px;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+/* Estilo específico para los títulos de las publicaciones */
+.ul h2 {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 10px;
+    margin: 0;
     border-radius: 5px;
 }
 
-.post-title {
-    color: #3498db;  /* Azul */
-    margin-bottom: 15px;
-    font-size: 1.5em;
+
+form {
+    text-align: left;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: auto auto; /* Dos columnas: una para el label y otra para los botones */
+    gap: 10px; /* Espacio entre las columnas */
 }
 
-.post-content {
-    color: #555;
-    margin-bottom: 15px;
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+    grid-column: span 2; /* El label abarca las dos columnas */
+    max-width: 300px; /* Ancho máximo del label según tus preferencias */
 }
 
-.service-image {
-    max-width: 100%;
-    height: auto;
-    margin-top: 15px;
+.input-container {
+    grid-column: span 2; /* El contenedor del input abarca las dos columnas */
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    grid-column: span 2; /* El contenedor de botones abarca las dos columnas */
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones de filtrar y limpiar filtro */
+}
+
+converse-profile-buttons {
+    text-align: center;
 }
 
 button {
     display: block;
-    margin: 20px auto;
-    padding: 12px;
-    background-color: #000;  /* Negro */
-    color: #fff;  /* Texto blanco */
+    max-width: 200px;
+    width: 48%; /* Ancho ligeramente reducido para dejar espacio entre los botones */
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #000;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #2980b9;  /* Azul oscuro al pasar el mouse */
+    background-color: #333;
+}
+
+/* Estilo específico para las publicaciones en una lista no ordenada */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: left;
+    border-radius: 5px;
+    border: 1px solid #000; /* Borde blanco alrededor de cada publicación */
 }

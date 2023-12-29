@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ServiWeb</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/opciones.css') }}">
+
    </head>
 <body>
     <header>
@@ -14,7 +16,7 @@
     <main>
         <button onclick="location.href='/create_post'">Crear Publicación</button>
 
-        <button onclick="location.href='/mis_conversaciones'">Mis Publicaciones</button>
+        <button onclick="location.href='/mis_post'">Mis Publicaciones</button>
         <button onclick="location.href='/view_post'">Ver Publicaciones</button>
     </main>
 
