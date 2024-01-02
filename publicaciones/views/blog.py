@@ -73,27 +73,34 @@ def create_post():
 
             # Procesar cada fecha seleccionada
             for fecha in fechas:
-                  # Mover esta línea aquí para reiniciar la lista en cada iteración
+            
+                print('Despues de procesar fechas')
+
                 fecha = fecha.strip()  # Eliminar espacios en blanco adicionales
 
-                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}','')
-                hora_fin_str = request.form.get(f'hora_fin_{fecha}','')
+    # Obtener las horas de inicio y fin
+                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}', '')
+                hora_fin_str = request.form.get(f'hora_fin_{fecha}', '')
 
-    # Agregar las fechas como cadena a la lista
+    # Verificar si ambas horas están presentes
+            if hora_inicio_str and hora_fin_str:
                 fechas_str.append(f'{fecha} {hora_inicio_str} - {fecha} {hora_fin_str}')
+            else:
+                print(f'Advertencia: No se seleccionaron horas para la fecha {fecha}')
+            
+            fechas_str = ', '.join(fechas_str)
 
-# Unir las fechas en una cadena separada por comas
-            fechas_cadena = ', '.join(fechas_str)
-
-            print(f'Fechas procesadas: {fechas_cadena}')
-
+            print('Fechas seleccionadas:', fechas)
+            print('Fechas procesadas:', fechas_str)
+            print('Hora de inicio:', hora_inicio_str)
+            print('Hora de fin:', hora_fin_str)
             # Crear la instancia de Publicacion
             post = Publicacion(
                 usuario_id=username,
                 Titulo=titulo,
                 texto=texto,
                 servicio_id=servicio_id,
-                fechas=fechas_cadena,
+                fechas=fechas_str,
                 empieza=empieza,
                 marcada=False,
             )
