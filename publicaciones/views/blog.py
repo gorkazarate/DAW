@@ -48,6 +48,8 @@ def view_post():
         # Obtén todas las publicaciones si no hay filtro
         posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
 
+    print("Número de publicaciones:", len(posts))  # Agrega esta línea para depurar
+
     return render_template('view_post.html', posts=posts)
 
 @blog.route('/create_post', methods=['GET', 'POST'])
@@ -62,45 +64,54 @@ def create_post():
             texto = request.form.get('texto')
             servicio_id = request.form.get('servicio_id')
             empieza = datetime.utcnow()
+            
             # Obtener las fechas seleccionadas
-            fechas = request.form.getlist('fechas[]')
+            fechas = request.form.getlist('fechas')
+            fechas_str = []
 
-            print('antes de procesar fechas')
+            print('Antes de procesar fechas')
+
             # Procesar cada fecha seleccionada
             for fecha in fechas:
-                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}')
-                hora_fin_str = request.form.get(f'hora_fin_{fecha}')
+                  # Mover esta línea aquí para reiniciar la lista en cada iteración
+                fecha = fecha.strip()  # Eliminar espacios en blanco adicionales
 
-    # Ajustar el formato al nuevo formato que incluye horas y minutos
-                fecha_hora_inicio = datetime.strptime(f'{fecha} {hora_inicio_str}', '%Y-%m-%d %H:%M')
-                fecha_hora_fin = datetime.strptime(f'{fecha} {hora_fin_str}', '%Y-%m-%d %H:%M')
+                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}','')
+                hora_fin_str = request.form.get(f'hora_fin_{fecha}','')
 
+    # Agregar las fechas como cadena a la lista
+                fechas_str.append(f'{fecha} {hora_inicio_str} - {fecha} {hora_fin_str}')
 
-                print(f'Fecha: {fecha}, Hora de inicio: {fecha_hora_inicio}, Hora de fin: {fecha_hora_fin}')
+# Unir las fechas en una cadena separada por comas
+            fechas_cadena = ', '.join(fechas_str)
 
-                # Crear la instancia de Publicacion
-                post = Publicacion(
-                    usuario_id=username,
-                    Titulo=titulo,
-                    texto=texto,
-                    servicio_id=servicio_id,
-                    fechas = f'{str(fecha_hora_inicio)} - {str(fecha_hora_fin)}',
-                    empieza=empieza,
-                    marcada=False,
-                )
+            print(f'Fechas procesadas: {fechas_cadena}')
 
-                # Agregar y commit a la base de datos
-                db.session.add(post)
-                db.session.commit()
+            # Crear la instancia de Publicacion
+            post = Publicacion(
+                usuario_id=username,
+                Titulo=titulo,
+                texto=texto,
+                servicio_id=servicio_id,
+                fechas=fechas_cadena,
+                empieza=empieza,
+                marcada=False,
+            )
+
+            # Agregar y commit a la base de datos
+            db.session.add(post)
+            db.session.commit()
 
             flash('Publicación creada con éxito', 'success')
-            return redirect(url_for('blog.view_post'))
+            posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
+
+            return render_template('view_post.html', posts=posts)
 
         except Exception as e:
             flash(f'Error al procesar la publicación: {str(e)}', 'error')
             print(f'Error al procesar la publicación: {str(e)}')
 
-    return render_template('create_post.html', username=username, userid=userid)
+    return render_template('create_post.html', username=username, userid=userid)   
 
 @blog.route('/marcar_conversada/<int:idpost>', methods=['POST'])
 def marcar_conversada(idpost):

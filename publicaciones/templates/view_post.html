@@ -31,20 +31,14 @@
                 <li>
                     <h2>{{ post.Titulo }} - {{ post.usuario_id }}</h2>
                     <p>{{ post.texto }}</p>
-                    <p>{{ post.fechas }}</p>
-                    
-                    {% if post.servicio_id == '1' %}
-                        <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1">
-                    {% elif post.servicio_id == '2' %}
-                        <img src="{{ url_for('static', filename='imagenes/imagen_servicio_2.jpg') }}" alt="Servicio 2">
-                    {% elif post.servicio_id == '3' %}
-                        <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3">
-                    {% endif %}
-                    
-                    <div class="button-container">
-                        <button class="converse-button" onclick="marcarConversada('{{ post.idpost }}')">Conversar</button>
-                        <button class="profile-button" onclick="location.href='/ver_perfil/{{ post.usuario_id|replace(' ', '%20') }}'">Perfil</button>
-                    </div>
+                    <p>Fechas y horas:</p>
+                    <ul>
+                        {% for fecha_hora_inicio, fecha_hora_fin in post.fechas %}
+                            <li>{{ fecha_hora_inicio }} - {{ fecha_hora_fin }}</li>
+                        {% endfor %}
+                    </ul>
+        
+                    <!-- Resto del código ... -->
                 </li>
             {% endfor %}    
         </ul>

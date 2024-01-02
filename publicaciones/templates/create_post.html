@@ -44,12 +44,12 @@
                 // Inicializar Flatpickr para fechas y horas
                 flatpickr('#fechas', {
                     enableTime: false,
-                    dateFormat: 'Y-m-d ',
+                    dateFormat: 'Y-m-d',
                     mode: 'multiple',
                     onClose: function (selectedDates) {
-                    mostrarHorasSegunFechas(selectedDates);
+                        mostrarHorasSegunFechas(selectedDates);
                     }
-                });
+                }); 
             
                 // Función para mostrar las horas basadas en las fechas seleccionadas
                 function mostrarHorasSegunFechas(selectedDates) {
@@ -58,16 +58,19 @@
                     contenedorHorasInicio.innerHTML = ''; // Limpiar contenido anterior
                     contenedorHorasFin.innerHTML = ''; // Limpiar contenido anterior
 
-                selectedDates.forEach(function (fecha) {
-                    contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fecha}">Hora de inicio para ${fecha}:</label>`;
-                    contenedorHorasInicio.innerHTML += `<input type="time" id="hora_inicio_${fecha}" name="hora_inicio_${fecha}" required>`;
-                    contenedorHorasInicio.innerHTML += '<br>';
+                    selectedDates.forEach(function (fecha) {
+        // Asegúrate de que la fecha esté en el formato esperado por el servidor
+                        var fechaFormatoServidor = fecha.toISOString().split('T')[0];
 
-                    contenedorHorasFin.innerHTML += `<label for="hora_fin_${fecha}">Hora de fin para ${fecha}:</label>`;
-                    contenedorHorasFin.innerHTML += `<input type="time" id="hora_fin_${fecha}" name="hora_fin_${fecha}" required>`;
-                    contenedorHorasFin.innerHTML += '<br>';
-                });
-            }
+                        contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fechaFormatoServidor}">Hora de inicio para ${fecha}:</label>`;
+                        contenedorHorasInicio.innerHTML += `<input type="time" id="hora_inicio_${fechaFormatoServidor}" name="hora_inicio_${fechaFormatoServidor}" required>`;
+                        contenedorHorasInicio.innerHTML += '<br>';
+
+                        contenedorHorasFin.innerHTML += `<label for="hora_fin_${fechaFormatoServidor}">Hora de fin para ${fecha}:</label>`;
+                        contenedorHorasFin.innerHTML += `<input type="time" id="hora_fin_${fechaFormatoServidor}" name="hora_fin_${fechaFormatoServidor}" required>`;
+                        contenedorHorasFin.innerHTML += '<br>';
+                    });
+                }
             </script>
             </form>
             </main>

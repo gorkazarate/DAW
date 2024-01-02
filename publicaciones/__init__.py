@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.config['STATIC_FOLDER'] = 'static'
 
 
 db = SQLAlchemy(app)  # Crear la instancia de SQLAlchemy asociada a tu aplicación
+migrate = Migrate(app, db)
 
 # Aquí puedes realizar otras configuraciones si es necesario
 
