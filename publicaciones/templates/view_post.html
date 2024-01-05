@@ -6,7 +6,7 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='tu-imagen.png') }}" alt="Logo">
+        <img src="{{ url_for('static', filename='serviweb_isotipo_400x400.png') }}" alt="Logo">
         <h1>Publicaciones</h1>
         <!-- Agrega tu botón o contenido adicional en el encabezado si es necesario -->
     </header>
@@ -33,11 +33,9 @@
                     <p>{{ post.texto }}</p>
                     <p>Fechas y horas:</p>
                     <ul>
-                        {% for fecha_hora_inicio, fecha_hora_fin in post.fechas %}
-                            <li>{{ fecha_hora_inicio }} - {{ fecha_hora_fin }}</li>
-                        {% endfor %}
+                        <p>{{ post.fechas}}</p>
                     </ul>
-        
+      
                     <!-- Resto del código ... -->
                 </li>
             {% endfor %}    

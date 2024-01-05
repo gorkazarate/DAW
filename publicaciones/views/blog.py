@@ -79,8 +79,8 @@ def create_post():
                 fecha = fecha.strip()  # Eliminar espacios en blanco adicionales
 
     # Obtener las horas de inicio y fin
-                hora_inicio_str = request.form.get(f'hora_inicio_{fecha}', '')
-                hora_fin_str = request.form.get(f'hora_fin_{fecha}', '')
+                hora_inicio_str = request.form.get(f'hora_inicio_${fechaFormatoServidor}', '')
+                hora_fin_str = request.form.get(f'hora_fin_${fechaFormatoServidor}', '')
 
     # Verificar si ambas horas están presentes
             if hora_inicio_str and hora_fin_str:

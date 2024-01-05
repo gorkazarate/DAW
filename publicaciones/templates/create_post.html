@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <img src="/static/logo.png" alt="Logo" width="50" height="50">
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
         <h1>ServiWeb - Crear Publicación</h1>
     </header>
     <main>
@@ -69,6 +69,8 @@
                         contenedorHorasFin.innerHTML += `<label for="hora_fin_${fechaFormatoServidor}">Hora de fin para ${fecha}:</label>`;
                         contenedorHorasFin.innerHTML += `<input type="time" id="hora_fin_${fechaFormatoServidor}" name="hora_fin_${fechaFormatoServidor}" required>`;
                         contenedorHorasFin.innerHTML += '<br>';
+                    print('ver horas inicio',contenedorHorasFin);
+                   
                     });
                 }
             </script>
