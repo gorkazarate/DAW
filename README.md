@@ -41,3 +41,8 @@ python main.py
 Por otro lado, ejecutamos el servidor que se encarga del OAuth y hace de Gateway al microservicio Publicaciones server. Nos ubicamos en el directorio /OAuth_api y ejecutamos el comando:
 ```
 node index.js 
+```
+
+## 7. Como acceder a la parte cliente
+Para proceder a la página principal del proyecto, accedemos a la siguiente ruta una vez inicializados ambos microservicios:
+ - Página principal &#8594; [http://127.0.0.1:9090/](http://127.0.0.1:9090/)
