@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +12,7 @@
 <body>
     <header>
         <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
-        <h1>ServiWeb - Crear Publicación</h1>
+        <h1>Crear Publicación</h1>
     </header>
     <main>
         <form id="createPostForm" method="post" action="{{ url_for('blog.create_post') }}">
@@ -43,14 +42,18 @@
             <script>
                 // Inicializar Flatpickr para fechas y horas
                 flatpickr('#fechas', {
-                    enableTime: false,
+                    enableTime: true,
                     dateFormat: 'Y-m-d',
                     mode: 'multiple',
+                    time_24hr: true,
+                    timeZone: 'UTC',
                     onClose: function (selectedDates) {
                         mostrarHorasSegunFechas(selectedDates);
                     }
-                }); 
-            
+                });
+
+                document.getElementsByClassName('flatpickr-time time24hr')[0].style.visibility = 'hidden';
+
                 // Función para mostrar las horas basadas en las fechas seleccionadas
                 function mostrarHorasSegunFechas(selectedDates) {
                     var contenedorHorasInicio = document.getElementById('contenedor_horas_inicio');
@@ -59,22 +62,22 @@
                     contenedorHorasFin.innerHTML = ''; // Limpiar contenido anterior
 
                     selectedDates.forEach(function (fecha) {
-        // Asegúrate de que la fecha esté en el formato esperado por el servidor
+                        // Asegúrate de que la fecha esté en el formato esperado por el servidor
                         var fechaFormatoServidor = fecha.toISOString().split('T')[0];
+                        console.log(fechaFormatoServidor + ' Horas en html');
+                        console.log(fecha.toISOString());
 
-                        contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fechaFormatoServidor}">Hora de inicio para ${fecha}:</label>`;
+                        contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fechaFormatoServidor}">Hora de inicio para ${fechaFormatoServidor}:</label>`;
                         contenedorHorasInicio.innerHTML += `<input type="time" id="hora_inicio_${fechaFormatoServidor}" name="hora_inicio_${fechaFormatoServidor}" required>`;
                         contenedorHorasInicio.innerHTML += '<br>';
 
-                        contenedorHorasFin.innerHTML += `<label for="hora_fin_${fechaFormatoServidor}">Hora de fin para ${fecha}:</label>`;
+                        contenedorHorasFin.innerHTML += `<label for="hora_fin_${fechaFormatoServidor}">Hora de fin para ${fechaFormatoServidor}:</label>`;
                         contenedorHorasFin.innerHTML += `<input type="time" id="hora_fin_${fechaFormatoServidor}" name="hora_fin_${fechaFormatoServidor}" required>`;
                         contenedorHorasFin.innerHTML += '<br>';
-                    print('ver horas inicio',contenedorHorasFin);
-                   
                     });
                 }
             </script>
-            </form>
-            </main>
-            </body>
-            </html>
+        </form>
+    </main>
+</body>
+</html>

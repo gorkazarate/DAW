@@ -1,0 +1,77 @@
+/* Archivo perfil.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px; /* Espaciado entre la imagen y el título */
+}
+
+h1 {
+    margin: 0; /* Ajuste para el margen del título */
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center; /* Centra el texto del título */
+}
+
+main {
+    width: 100%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+form {
+    text-align: left;
+    margin-bottom: 20px;
+    max-width: 400px; /* Ancho máximo del formulario según tus preferencias */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555; /* Cambio de color al pasar el mouse */
+}

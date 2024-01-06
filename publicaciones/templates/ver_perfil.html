@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <img src="{{ url_for('static', filename='serviweb_isotipo_400x400.png') }}" alt="Logo">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/ver_perfil.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <title>Ver Perfil</title>
 </head>
 <body>
-    <h1>Perfil de {{ perfil.nombre_completo }}</h1>
-    <p>Numero de Likes: <span id="numLikes">{{ perfil.numLikes }}</span></p>
-    <p>Cumpleaños: {{ perfil.cumpleaños }}</p>
-    <p>Numero de Teléfono: {{ perfil.numerotlf }}</p>
-    <p>Dirección: {{ perfil.direccion }}</p>
+    <header>
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo" id="logo">
+        <h1>Perfil de {{ perfil.usuario_id }}</h1>
+    </header>
 
-    <button id="likeButton">Like</button>
-    <button onclick="window.location.href='/view_post'">Volver a View Post</button>
+    <main>
+        <p>Numero de Likes: <span id="numLikes">{{ perfil.numLikes }}</span></p>
+        <p>Cumpleaños: {{ perfil.cumpleaños }}</p>
+        <p>Numero de Teléfono: {{ perfil.numerotlf }}</p>
+        <p>Dirección: {{ perfil.direccion }}</p>
+
+        <button id="likeButton">Like</button>
+        <button onclick="window.location.href='/view_post'">Volver a View Post</button>
+    </main>
 
     <script>
         document.getElementById('likeButton').addEventListener('click', function() {

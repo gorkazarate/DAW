@@ -1,8 +1,7 @@
-from flask import render_template, Blueprint, flash, request, redirect, url_for, session
+from flask import render_template, Blueprint, flash, request, redirect, url_for, session, jsonify
 from models.publicacion import Publicacion
 from __init__ import db
-from datetime import datetime, timedelta
-from flask import jsonify
+from datetime import datetime
 
 
 blog = Blueprint('blog', __name__)
@@ -34,7 +33,7 @@ def view_opciones():
 
     return render_template('opciones.html', username=username, userid=userid)
 
-@blog.route("/view_post", methods=['GET', 'POST'])
+@blog.route("/view_post", methods=['GET'])
 def view_post():
     # Obtén el valor del parámetro 'filtroUsuario' de la URL
     filtro_usuario = request.args.get('filtroUsuario', None)
@@ -43,10 +42,10 @@ def view_post():
         # Reemplaza los espacios en el usuario_id con "+"
         filtro_usuario = filtro_usuario.replace('+', ' ')
         # Filtra las publicaciones por usuario_id si el filtro está presente
-        posts = Publicacion.query.filter_by(usuario_id=filtro_usuario).order_by(Publicacion.empieza.desc()).all()
+        posts = Publicacion.query.filter_by(usuario_id=filtro_usuario).order_by(Publicacion.idpost.desc()).all()
     else:
         # Obtén todas las publicaciones si no hay filtro
-        posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
+        posts = Publicacion.query.order_by(Publicacion.idpost.desc()).all()
 
     print("Número de publicaciones:", len(posts))  # Agrega esta línea para depurar
 
@@ -66,29 +65,36 @@ def create_post():
             empieza = datetime.utcnow()
             
             # Obtener las fechas seleccionadas
-            fechas = request.form.getlist('fechas')
-            fechas_str = []
-
+            fechas = request.form.getlist('fechas')[0].split(', ')
+            fechas_conjunto = []
+            print(fechas)
             print('Antes de procesar fechas')
 
             # Procesar cada fecha seleccionada
             for fecha in fechas:
             
                 print('Despues de procesar fechas')
-
+                print(request.form)
                 fecha = fecha.strip()  # Eliminar espacios en blanco adicionales
+                id_elemento_inicio='hora_inicio_'+ fecha
+                id_elemento_fin='hora_fin_'+ fecha
 
+                #print(id_elemento)
     # Obtener las horas de inicio y fin
-                hora_inicio_str = request.form.get(f'hora_inicio_${fechaFormatoServidor}', '')
-                hora_fin_str = request.form.get(f'hora_fin_${fechaFormatoServidor}', '')
+                hora_inicio_str = request.form.get(id_elemento_inicio)
+                hora_fin_str = request.form.get(id_elemento_fin)
 
+
+                if hora_inicio_str and hora_fin_str:
+                    fechas_conjunto.append(f'{fecha} {hora_inicio_str} - {fecha} {hora_fin_str}')
+                else:
+                    print(f'Advertencia: No se seleccionaron horas para la fecha {fecha}')
+
+                fechas_str = ', '.join(fechas_conjunto)
     # Verificar si ambas horas están presentes
-            if hora_inicio_str and hora_fin_str:
-                fechas_str.append(f'{fecha} {hora_inicio_str} - {fecha} {hora_fin_str}')
-            else:
-                print(f'Advertencia: No se seleccionaron horas para la fecha {fecha}')
             
-            fechas_str = ', '.join(fechas_str)
+            
+            
 
             print('Fechas seleccionadas:', fechas)
             print('Fechas procesadas:', fechas_str)
@@ -110,23 +116,26 @@ def create_post():
             db.session.commit()
 
             flash('Publicación creada con éxito', 'success')
-            posts = Publicacion.query.order_by(Publicacion.empieza.desc()).all()
 
-            return render_template('view_post.html', posts=posts)
+            return redirect('/view_post')
 
         except Exception as e:
             flash(f'Error al procesar la publicación: {str(e)}', 'error')
             print(f'Error al procesar la publicación: {str(e)}')
 
-    return render_template('create_post.html', username=username, userid=userid)   
+    return render_template('create_post.html', username=username, userid=userid)
 
-@blog.route('/marcar_conversada/<int:idpost>', methods=['POST'])
+@blog.route('/marcar_conversada/<idpost>', methods=['GET','POST'])
 def marcar_conversada(idpost):
     if request.method == 'POST':
         post = Publicacion.query.get_or_404(idpost)
         post.marcada = not post.marcada  # Cambia el estado de conversación
         db.session.commit()
-        return render_template('view_post',post=post)
+        # Simula enviar un correo al usuario y devuelve su ID
+        return jsonify({'status': 'success', 'usuario_id': post.usuario_id})
+    else:
+        # Manejar otros métodos si es necesario
+        return jsonify({'error': 'Método no permitido'}), 405
 
 @blog.route('/mis_post', methods=['GET'])
 def view_mis_conversaciones():
@@ -138,6 +147,19 @@ def view_mis_conversaciones():
     mis_conversaciones = Publicacion.query.filter_by(usuario_id=username, marcada=True).all()
 
     return render_template('mis_post.html', mis_conversaciones=mis_conversaciones)
+
+@blog.route('/desmarcar_marcadas/<idpost>', methods=['POST'])
+def desmarcar_marcadas(idpost):
+    if request.method == 'POST':
+        post = Publicacion.query.get_or_404(idpost)
+
+        # Establecer marcada como False
+        post.marcada = False
+
+        # Guardar los cambios en la base de datos
+        db.session.commit()
+
+        return jsonify({'status': 'success', 'message': 'Se ha enviado un SMS y un correo de respuesta.'})
 
 def delete_post(id):
     post = Publicacion.query.get_or_404(id)

@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post.css') }}">
+    <!-- Agrega los enlaces de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
     <!-- ... (código anterior) ... -->
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='serviweb_isotipo_400x400.png') }}" alt="Logo">
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
         <h1>Publicaciones</h1>
-        <!-- Agrega tu botón o contenido adicional en el encabezado si es necesario -->
     </header>
 
     <main>
@@ -20,8 +25,8 @@
             </div>
             <div class="button-container">
                 <div class="filter-buttons">
-                    <button type="submit">Filtrar</button>
-                    <button type="button" onclick="limpiarFiltro()">Limpiar filtro</button>
+                    <button type="submit" class="btn btn-primary btn-block">Filtrar</button>
+                    <button type="button" onclick="limpiarFiltro()" class="btn btn-secondary btn-block">Limpiar filtro</button>
                 </div>
             </div>
         </form>
@@ -33,17 +38,22 @@
                     <p>{{ post.texto }}</p>
                     <p>Fechas y horas:</p>
                     <ul>
-                        <p>{{ post.fechas}}</p>
+                        <p>{% if post.fechas %}{{ post.fechas|replace(', ', '<br>') }}{% endif %}</p>
                     </ul>
-      
-                    <!-- Resto del código ... -->
-                </li>
+
+                    <!-- Botones adicionales -->
+                    <div class="additional-buttons">
+                        <button class="btn btn-primary btn-block" onclick="marcarConversada({{ post.idpost }})">Marcar Conversada</button>
+                        <button class="btn btn-primary btn-block" onclick="location.href='/ver_perfil/{{ post.usuario_id }}'">Perfil</button>
+                    </div>
+                    <!-- Fin de los botones adicionales -->
+                </li>       
             {% endfor %}    
         </ul>
         
         <div class="main-buttons">
-            <button onclick="location.href='/opciones'">Volver opciones</button>
-            <button onclick="location.href='/create_post'">Crear publicación</button>
+            <button class="btn btn-primary btn-block" onclick="location.href='/opciones'">Volver opciones</button>
+            <button class="btn btn-success btn-block" onclick="location.href='/create_post'">Crear publicación</button>
         </div>
     </main>
 
@@ -54,16 +64,45 @@
         }
 
         function marcarConversada(idpost) {
-            fetch(`/marcar_conversada/${idpost}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    window.alert(`Se le ha enviado un email a ${data.usuario_id}`);
-                    console.log('Publicación marcada como conversada. Nuevo estado: ', data.conversada);
-                })
-                .catch(error => {
-                    console.error('Error al marcar la publicación como conversada:', error);
-                });
+            fetch(`/marcar_conversada/${idpost}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Hacer algo con la respuesta si es necesario
+                console.log(data);
+
+                // Mostrar un modal en lugar de una alerta
+                $('#myModal').modal('show');
+            })
+            .catch(error => {
+                console.error('Error al marcar la conversación:', error);
+            });
         }
     </script>
+
+    <!-- Agrega el modal al final del cuerpo del documento -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Se ha enviado un correo al usuario. <!-- Puedes personalizar este mensaje -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
