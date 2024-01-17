@@ -148,21 +148,3 @@ def view_mis_conversaciones():
 
     return render_template('mis_post.html', mis_conversaciones=mis_conversaciones)
 
-@blog.route('/desmarcar_marcadas/<idpost>', methods=['POST'])
-def desmarcar_marcadas(idpost):
-    if request.method == 'POST':
-        post = Publicacion.query.get_or_404(idpost)
-
-        # Establecer marcada como False
-        post.marcada = False
-
-        # Guardar los cambios en la base de datos
-        db.session.commit()
-
-        return jsonify({'status': 'success', 'message': 'Se ha enviado un SMS y un correo de respuesta.'})
-
-def delete_post(id):
-    post = Publicacion.query.get_or_404(id)
-    db.session.delete(post)
-    db.session.commit()
-    return redirect(url_for('blog.view_post'))

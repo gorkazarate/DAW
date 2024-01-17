@@ -2,30 +2,34 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
 header {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centrar horizontalmente */
     background-color: #3498db;
     color: #fff;
     padding: 10px;
+    width: 100%; /* Asegura que el header ocupe el 100% del ancho */
+    box-sizing: border-box;
 }
 
 img {
     width: 50px;
     height: 50px;
-    margin-bottom: 10px; /* Espaciado entre la imagen y el título */
+    margin-right: 10px;
 }
 
 h1 {
-    margin: 10px 0; /* Ajusta el margen arriba y abajo */
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center; /* Centra el texto del título */
+    display: inline-block;
+    margin: 600px;
+    flex-grow: 1;
+    text-align: center;
 }
 
 main {
@@ -34,17 +38,15 @@ main {
     text-align: center;
 }
 
-/* Estilo específico para la sección "Publicaciones" */
 .ul {
     background-color: #3498db;
-    color: #fff;
+    color: #4CAF50;
     text-align: left;
     border-radius: 5px;
     margin: 0 auto;
     max-width: 600px;
 }
 
-/* Estilo específico para los títulos de las publicaciones */
 .ul h2 {
     background-color: #2980b9;
     color: #fff;
@@ -52,7 +54,6 @@ main {
     margin: 0;
     border-radius: 5px;
 }
-
 
 form {
     text-align: left;
@@ -94,16 +95,15 @@ converse-profile-buttons {
 }
 
 button {
-    display: block;
-    max-width: 200px;
-    width: 48%; /* Ancho ligeramente reducido para dejar espacio entre los botones */
-    padding: 10px;
-    box-sizing: border-box;
+    font-size: 1.5rem; /* Tamaño de la fuente */
+    padding: 1rem 2rem; /* Espaciado interno */
+    margin: 1rem; /* Margen exterior */
     background-color: #000;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
 button:hover {
@@ -124,7 +124,6 @@ li {
     text-align: left;
     border-radius: 5px;
     border: 1px solid #000; /* Borde blanco alrededor de cada publicación */
-}
 }
 
 .content {

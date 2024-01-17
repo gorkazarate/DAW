@@ -32,25 +32,25 @@ h2 {
 }
 
 main {
-    width: 100%;
-    margin: 20px auto;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
 button {
-    display: block;
-    max-width: 200px;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin: 10px auto;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
+    font-size: 1.5rem; /* Tamaño de la fuente */
+    padding: 1rem 2rem; /* Espaciado interno */
+    margin: 1rem; /* Margen exterior */
+    background-color: #2980b9; /* Color de fondo relacionado con el header */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición */
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #256293; /* Cambio de color al pasar el ratón, tono más oscuro */
 }

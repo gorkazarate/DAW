@@ -1,58 +1,54 @@
-<!-- views/pages/.ejs -->
-<!doctype html>
-<html>
-<head>
-    
-    <!-- TAB Properties-->
-    <title>SignIn Servi Web</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- GOOGLE FONTS-->
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <!-- views/pages/.ejs -->
+    <!doctype html>
+    <html>
+    <head>
+        
+        <!-- TAB Properties-->
+        <link rel="icon" href="/imagenes/descarga.png">
+        <title>SignIn Servi Web</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- GOOGLE FONTS-->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
-    <!-- JQUERY-->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <!-- JQUERY-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <!-- BOOTSTRAP -->
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-    <!-- CSS & LESS -->
-    <link rel="stylesheet" type="text/css" href="/static/auth.css" /> 
-   
-    <!-- LESS.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.1/less.js" ></script>
+        <!-- CSS & LESS -->
+        <link rel="stylesheet" type="text/css" href="/auth.css" /> 
+        <link rel="stylesheet" type="text/css" href="/auth.less" /> 
+        <!-- LESS.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/4.1.1/less.js" ></script>
 
-    <!-- JS -->
-    <script src="/static/Auth.js"></script>  
+        <!-- JS -->
+        <script src="/Auth.js"></script>  
 
-</head>
-<body>
-    
-    <div class="container">    
-        <div id="loginbox"> 
-            </div>
+    </head>
+    <body>
+        <div class="container">    
+            <div id="loginbox"></div>
             
-            <div class="panel panel-primary" >
-                <div class="panel-heading">
-                   
-                </div>     
+            <div class="panel panel-primary">
+                <div class="panel-heading"></div>     
                 <div class="panel-body">
                     <div class="d-flex justify-content-center">
                         <a href="/auth/google">
                             <div class="google-btn">
                                 <div class="google-icon-wrapper">
-                                    <img class="google-icon" src="/static/imagenes/boton.jpeg" >  
-                                </div>                                             
+                                    <!-- Agrega la imagen con la ruta específica -->
+                                    <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>   
+                                </div>                                                                         
                             </div>
                         </a>
                     </div>   
                 </div>     
             </div>  
-
         </div>
-    </div>
-
-    <div id="particles"></div>
-</body>
-</html> 
+    
+        <div id="particles"></div>
+    </body>
+    </html>

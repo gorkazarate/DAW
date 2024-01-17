@@ -10,12 +10,15 @@
    
     <!-- ... (código anterior) ... -->
 </head>
-<body>
-    <header>
-        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
-        <h1>Publicaciones</h1>
-    </header>
+<header>
+    <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
 
+    <h1>Publicaciones</h1>
+    
+</header>
+
+<body>
+    
     <main>
         <!-- Formulario de Filtración por usuario_id -->
         <form action="{{ url_for('blog.view_post') }}" method="get" class="filter-form">
@@ -38,7 +41,8 @@
                     <p>{{ post.texto }}</p>
                     <p>Fechas y horas:</p>
                     <ul>
-                        <p>{% if post.fechas %}{{ post.fechas|replace(', ', '<br>') }}{% endif %}</p>
+                        <p>{% if post.fechas %}{{ post.fechas|replace(', ', '<br>')|safe }}
+                            {% endif %}</p>
                     </ul>
 
                     <!-- Botones adicionales -->

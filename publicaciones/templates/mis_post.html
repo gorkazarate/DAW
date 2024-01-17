@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Agrega los enlaces de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- ... (otros estilos y scripts) ... -->
-    <title>Mis Publicaciones </title>
+    <title>Mis Publicaciones</title>
 </head>
 <body>
     <header class="bg-primary text-white p-3">
@@ -28,10 +26,10 @@
             {% for post in mis_conversaciones %}
                 {% if post.marcada == 1 %}
                     <div class="card mb-4" data-post-idpost="{{ post.idpost }}">
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: {% if post.estado == 'aceptado' or post.estado == 'rechazado' %}lightgreen{% elif post.estado == 'rechazado' %}lightcoral{% endif %}">
                             <h2 class="card-title">{{ post.Titulo }} - {{ post.usuario_id }}</h2>
                             <p class="card-text">{{ post.texto }}</p>
-                            <p class="card-text">{{ post.fechas }}</p>
+                            <p class="card-text">{% if post.fechas %}{{ post.fechas|replace(', ', '<br>')|safe }}{% endif %}</p>
                         
                             {% if post.servicio_id == '1' %}
                                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1" class="img-fluid">
@@ -41,8 +39,8 @@
                                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_3.jpg') }}" alt="Servicio 3" class="img-fluid">
                             {% endif %}
                         
-                            <button class="btn btn-primary" id="aceptarBtn" data-post-idpost="{{ post.idpost }}">Aceptar</button>
-                            <button class="btn btn-danger" id="rechazarBtn" data-post-idpost="{{ post.idpost }}">Rechazar</button>
+                            <button class="btn btn-primary" id="aceptarBtn" data-post-idpost="{{ post.idpost }}" {% if post.estado == 'aceptado' or post.estado == 'rechazado' %}style="display:none;"{% endif %}>Aceptar</button>
+                            <button class="btn btn-danger" id="rechazarBtn" data-post-idpost="{{ post.idpost }}" {% if post.estado == 'aceptado' or post.estado == 'rechazado' %}style="display:none;"{% endif %}>Rechazar</button>
     
                             <!-- Nuevo div para mostrar el mensaje -->
                             <div class="mensaje" id="mensaje-{{ post.idpost }}"></div>
@@ -51,75 +49,60 @@
                                     Se ha enviado un SMS y un correo de respuesta.
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-</main>
-<div class="container mt-4">
-    <a class="btn btn-primary" href="javascript:history.go(-1)">Volver</a>
-</div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </main>
+    <div class="container mt-4">
+        <a class="btn btn-primary" href="javascript:history.go(-1)">Volver</a>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var aceptarBtns = document.querySelectorAll('#aceptarBtn');
+            var rechazarBtns = document.querySelectorAll('#rechazarBtn');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var aceptarBtns = document.querySelectorAll('#aceptarBtn');
-        var rechazarBtns = document.querySelectorAll('#rechazarBtn');
+            aceptarBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var card = btn.closest('.card');
+                    card.style.backgroundColor = 'lightgreen'; // Cambia el fondo a verde
+                    btn.style.display = 'none'; // Oculta el botón Aceptar
+                    var rechazarBtn = card.querySelector('#rechazarBtn');
+                    rechazarBtn.style.display = 'none'; // Oculta el botón Rechazar
+                    localStorage.setItem('estado_' + card.dataset.postIdpost, 'aceptado');
+                });
+            });
 
-        aceptarBtns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var idpost = btn.getAttribute('data-post-idpost');
-                realizarAccion(idpost, 'aceptar');
+            rechazarBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var card = btn.closest('.card');
+                    card.style.backgroundColor = 'lightcoral'; // Cambia el fondo a rojo claro
+                    btn.style.display = 'none'; // Oculta el botón Rechazar
+                    var aceptarBtn = card.querySelector('#aceptarBtn');
+                    aceptarBtn.style.display = 'none'; // Oculta el botón Aceptar
+                    localStorage.setItem('estado_' + card.dataset.postIdpost, 'rechazado');
+                });
             });
         });
 
-        rechazarBtns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var idpost = btn.getAttribute('data-post-idpost');
-                realizarAccion(idpost, 'rechazar');
-            });
-        });
-
-        function realizarAccion(idpost, accion) {
-            fetch(`/desmarcar_marcadas/${idpost}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    idpost: idpost,
-                    accion: accion,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                var mensajeDiv = document.getElementById('mensaje-' + idpost);
-
-                // Muestra el panel de notificación solo si la acción es aceptar
-                if (accion === 'aceptar') {
-                    var notificacionDiv = document.getElementById('notificacion-' + idpost);
-                    notificacionDiv.style.display = 'block';
-                } else if (accion === 'rechazar') {
-                    // Cambia el fondo del mensaje a rojo
-                    mensajeDiv.style.backgroundColor = 'red';
-                    
-                    // Muestra el panel de notificación
-                    var notificacionDiv = document.getElementById('notificacion-' + idpost);
-                    notificacionDiv.style.display = 'block';
+        // Recuperar estados almacenados después de recargar la página
+        window.addEventListener('DOMContentLoaded', function () {
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function (card) {
+                var estado = localStorage.getItem('estado_' + card.dataset.postIdpost);
+                if (estado === 'aceptado') {
+                    card.style.backgroundColor = 'lightgreen';
+                    card.querySelector('#aceptarBtn').style.display = 'none';
+                    card.querySelector('#rechazarBtn').style.display = 'none';
+                } else if (estado === 'rechazado') {
+                    card.style.backgroundColor = 'lightcoral';
+                    card.querySelector('#aceptarBtn').style.display = 'none';
+                    card.querySelector('#rechazarBtn').style.display = 'none';
                 }
-
-                // Oculta la tarjeta después de unos segundos (puedes ajustar el tiempo)
-                setTimeout(function () {
-                    var card = document.querySelector('[data-post-idpost="' + idpost + '"]');
-                    card.style.display = 'none';
-                }, 3000); // Oculta después de 3000 milisegundos (3 segundos)
-            })
-            .catch(error => {
-                console.error('Error en la solicitud AJAX:', error);
             });
-        }
-    });
-</script>
+        });
+    </script>
 </body>
 </html>
