@@ -30,7 +30,7 @@
                             <h2 class="card-title">{{ post.Titulo }} - {{ post.usuario_id }}</h2>
                             <p class="card-text">{{ post.texto }}</p>
                             <p class="card-text">{% if post.fechas %}{{ post.fechas|replace(', ', '<br>')|safe }}{% endif %}</p>
-                        
+                            
                             {% if post.servicio_id == '1' %}
                                 <img src="{{ url_for('static', filename='imagenes/imagen_servicio_1.jpg') }}" alt="Servicio 1" class="img-fluid">
                             {% elif post.servicio_id == '2' %}
@@ -72,6 +72,7 @@
                     var rechazarBtn = card.querySelector('#rechazarBtn');
                     rechazarBtn.style.display = 'none'; // Oculta el botón Rechazar
                     localStorage.setItem('estado_' + card.dataset.postIdpost, 'aceptado');
+                    mostrarAlerta();
                 });
             });
 
@@ -83,10 +84,14 @@
                     var aceptarBtn = card.querySelector('#aceptarBtn');
                     aceptarBtn.style.display = 'none'; // Oculta el botón Aceptar
                     localStorage.setItem('estado_' + card.dataset.postIdpost, 'rechazado');
+                    mostrarAlerta();
                 });
             });
+            function mostrarAlerta() {
+                alert('Se ha enviado un SMS y un correo de respuesta.');
+            }
         });
-
+        
         // Recuperar estados almacenados después de recargar la página
         window.addEventListener('DOMContentLoaded', function () {
             var cards = document.querySelectorAll('.card');

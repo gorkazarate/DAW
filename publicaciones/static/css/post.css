@@ -27,7 +27,7 @@ img {
 
 h1 {
     display: inline-block;
-    margin: 600px;
+    margin: 0;
     flex-grow: 1;
     text-align: center;
 }
@@ -140,4 +140,15 @@ li {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+   
+    .content {
+        width: 100%;
+    }
+
+    .sidebar {
+        display: none; 
+    }
 }

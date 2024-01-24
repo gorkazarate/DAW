@@ -11,7 +11,7 @@
     <!-- ... (código anterior) ... -->
 </head>
 <header>
-    <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
+    <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo"class="mr-3 float-left img-thumbnail" style="max-width: 50px;">
 
     <h1>Publicaciones</h1>
     
@@ -47,8 +47,8 @@
 
                     <!-- Botones adicionales -->
                     <div class="additional-buttons">
-                        <button class="btn btn-primary btn-block" onclick="marcarConversada({{ post.idpost }})">Marcar Conversada</button>
-                        <button class="btn btn-primary btn-block" onclick="location.href='/ver_perfil/{{ post.usuario_id }}'">Perfil</button>
+                        <button class="btn btn-primary btn-block" onclick="marcarConversada({{ post.idpost }})">Enviar Mensaje</button>
+                        <button class="btn btn-primary btn-block" onclick="location.href='/ver_perfil/{{ post.usuario_id }}'">Ver Perfil</button>
                     </div>
                     <!-- Fin de los botones adicionales -->
                 </li>       

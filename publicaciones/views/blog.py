@@ -144,7 +144,8 @@ def view_mis_conversaciones():
     userid = session.get('userid', None)
 
     # Obtén las publicaciones del usuario que han sido marcadas como conversadas
-    mis_conversaciones = Publicacion.query.filter_by(usuario_id=username, marcada=True).all()
+    mis_conversaciones = Publicacion.query.filter_by(usuario_id=username, marcada=True).order_by(Publicacion.empieza.desc()).all()
+
+   
 
     return render_template('mis_post.html', mis_conversaciones=mis_conversaciones)
-

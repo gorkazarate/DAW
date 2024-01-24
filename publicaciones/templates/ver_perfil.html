@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo" id="logo">
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo" id="logo" class="img-fluid">
         <h1>Perfil de {{ perfil.usuario_id }}</h1>
     </header>
 
@@ -28,7 +28,8 @@
     </main>
 
     <script>
-        document.getElementById('likeButton').addEventListener('click', function() {
+        // Función para realizar la solicitud AJAX y actualizar el número de likes
+        function updateNumLikes() {
             var numLikesElement = document.getElementById('numLikes');
             var currentNumLikes = parseInt(numLikesElement.textContent);
 
@@ -45,7 +46,13 @@
                 }
             };
             xhr.send();
-        });
+        }
+
+        // Ejecutar la función al cargar la página
+        document.addEventListener('DOMContentLoaded', updateNumLikes);
+
+        // Agregar el evento de clic al botón
+        document.getElementById('likeButton').addEventListener('click', updateNumLikes);
     </script>
 </body>
 </html>

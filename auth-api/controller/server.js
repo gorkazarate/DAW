@@ -132,7 +132,6 @@ router.get('/auth/google/callback',
 
 
     res.redirect(301,'http://localhost:8000?username='+ userInfo.full_name+'&userid='+ userInfo._id)
-    //res.redirect(301,'http://localhost:8000/login?token=' + token /*+ '&username=' + userProfile['displayName']*/);
 
 });
 

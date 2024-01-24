@@ -5,16 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Perfil</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/perfil.css') }}">
+    <script>
+        function validarTelefono() {
+            var numerotlfInput = document.getElementById('numerotlf');
+            var numerotlfValue = numerotlfInput.value;
+
+            // Verifica que el número tenga exactamente 9 dígitos y sea positivo
+            if (/^\d{9}$/.test(numerotlfValue) && parseInt(numerotlfValue) > 0) {
+                return true;
+            } else {
+                alert("Ingrese un número de teléfono válido (9 dígitos positivos).");
+                return false;
+            }
+        }
+
+        function mostrarMensaje(mensaje) {
+            alert(mensaje);
+        }
+    </script>
 </head>
 <body>
     <header>
+        
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo" >
         <h1>Crear Perfil</h1>
-        <img src="{{ url_for('static', filename='serviweb_isotipo_400x400.png') }}" alt="Logo">
-
     </header>
 
     <main>
-        <form method="post" action="{{ url_for('perfil.crear_perfil', username=session['username'], userid=session['userid']) }}">
+        <form method="post" onsubmit="mostrarMensaje('El perfil con el nombre ' + document.getElementsByName('nombre_completo')[0].value + ' se ha guardado correctamente.');" action="{{ url_for('perfil.crear_perfil', username=session['username'], userid=session['userid']) }}">
             <label for="nombre_completo">Nombre Completo:</label>
             <input type="text" name="nombre_completo" required><br>
             
@@ -22,7 +40,7 @@
             <input type="date" name="cumpleaños" required><br>
 
             <label for="numerotlf">Número de Teléfono:</label>
-            <input type="text" name="numerotlf" required><br>
+            <input type="text" id="numerotlf" name="numerotlf" required><br>
 
             <label for="direccion">Dirección:</label>
             <input type="text" name="direccion" required><br>

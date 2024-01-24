@@ -18,30 +18,16 @@ const client = new MongoClient(uri, {
 
 // Funcion para insertar un usuario en la BD
 exports.insert = function (userInfo) {
-    /*
-    MongoClient.connect (uri, function (err, db) {
-        if (err) throw err; 
-        var dbo = db.db("OAUTH");
-        dbo.collection("Users").insertOne(userInfo, function(err, res) {
-            err ? console.log("[Error] User not inserted" + err) : console.log("[+] User inserted") ;
-            db.close();
-            console.log("Se inserta");
-
-        });
-    });
-    */
-    console.log("**********dentro de insert")
-
+    
+    
     async function run() {
       // Connect the client to the server	(optional starting in v4.7)
       await client.connect();
-      console.log("**********dentro de insert1111111111111")
 
       try {
         // Connect to the "insertDB" database and access its "haiku" collection
         const database = client.db("OAUTH");
         const users = database.collection("Users");
-        console.log("**********dentro de insert222222222222222")
 
         // Create a document to insert
         console.log(userInfo);

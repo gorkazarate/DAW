@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
+        <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo"class="img-fluid">
         <h1>Crear Publicación</h1>
     </header>
     <main>
@@ -40,6 +40,9 @@
             <button type="submit">Crear Publicación</button>
             
             <script>
+                var fechaActual = new Date();
+                var fechaActualFormato = fechaActual.toISOString().split('T')[0];
+
                 // Inicializar Flatpickr para fechas y horas
                 flatpickr('#fechas', {
                     enableTime: true,
@@ -47,6 +50,7 @@
                     mode: 'multiple',
                     time_24hr: true,
                     timeZone: 'UTC',
+                    minDate: fechaActualFormato,
                     onClose: function (selectedDates) {
                         mostrarHorasSegunFechas(selectedDates);
                     }
@@ -54,18 +58,30 @@
 
                 document.getElementsByClassName('flatpickr-time time24hr')[0].style.visibility = 'hidden';
 
+                // Evento para validar la relación entre horas de inicio y fin
+                document.addEventListener('input', function (event) {
+                    var inputId = event.target.id;
+
+                    if (inputId.startsWith('hora_inicio')) {
+                        var fechaFormatoServidor = inputId.replace('hora_inicio_', '');
+                        var horaFinInput = document.getElementById('hora_fin_' + fechaFormatoServidor);
+
+                        if (horaFinInput.value < event.target.value) {
+                            alert('La hora de fin no puede ser antes que la hora de inicio.');
+                            event.target.value = '';
+                        }
+                    }
+                });
+
                 // Función para mostrar las horas basadas en las fechas seleccionadas
                 function mostrarHorasSegunFechas(selectedDates) {
                     var contenedorHorasInicio = document.getElementById('contenedor_horas_inicio');
                     var contenedorHorasFin = document.getElementById('contenedor_horas_fin');
-                    contenedorHorasInicio.innerHTML = ''; // Limpiar contenido anterior
-                    contenedorHorasFin.innerHTML = ''; // Limpiar contenido anterior
+                    contenedorHorasInicio.innerHTML = '';
+                    contenedorHorasFin.innerHTML = '';
 
                     selectedDates.forEach(function (fecha) {
-                        // Asegúrate de que la fecha esté en el formato esperado por el servidor
                         var fechaFormatoServidor = fecha.toISOString().split('T')[0];
-                        console.log(fechaFormatoServidor + ' Horas en html');
-                        console.log(fecha.toISOString());
 
                         contenedorHorasInicio.innerHTML += `<label for="hora_inicio_${fechaFormatoServidor}">Hora de inicio para ${fechaFormatoServidor}:</label>`;
                         contenedorHorasInicio.innerHTML += `<input type="time" id="hora_inicio_${fechaFormatoServidor}" name="hora_inicio_${fechaFormatoServidor}" required>`;

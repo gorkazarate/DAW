@@ -7,13 +7,14 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/inicio.css') }}">
    
 </head>
+<body>
 <header>
         
-    <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo">
+    <img src="{{ url_for('static', filename='imagenes/serviweb_isotipo_400x400.png') }}" alt="Logo"class="img-fluid">
     <h1>Bienvenido</h1>
 
 </header>
-<body>
+
     
     <main>
        
@@ -25,7 +26,7 @@
 
             <!-- Botón para redirigir a /opciones -->
             <a href="{{ url_for('blog.view_opciones', username=session['username'], userid=session['userid']) }}">
-                <button type="button">Visitar Opciones</button>
+                <button type="button">Visitar Menú</button>
             </a>
         </div>
     </main>
